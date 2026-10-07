@@ -7,6 +7,7 @@ import com.mycompany.irr00_group_project.gamelogic.grid.GridManager;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceFactory;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceType;
+import com.mycompany.irr00_group_project.sound.GameSoundController;
 
 import javafx.scene.input.KeyEvent;
 
@@ -140,7 +141,7 @@ public class Game implements GameEngine {
         this.currentPiece = null;
         this.nextPiece = null;
         spawnNewPiece();
-        
+
         System.out.println("Game started with " + this.gridManager.getPieces().size() + " pieces");
     }
 
@@ -158,7 +159,7 @@ public class Game implements GameEngine {
         // Reset pieces
         this.currentPiece = null;
         this.nextPiece = null;
-        
+
         // Start the game
         start();
     }
@@ -167,10 +168,18 @@ public class Game implements GameEngine {
         System.out.println("GAME OVER!");
         gameOver = true;
         gameStarted = false;
+        
+        // Play gameover sound
+        GameSoundController gameSoundController = new GameSoundController();
+        gameSoundController.onGameOver();
+        
     }
 
     @Override
     public void handle(KeyEvent keyEvent) {
+        
+        GameSoundController gameSoundController = new GameSoundController();
+        
         if (!gameStarted || gameOver || currentPiece == null) {
             System.out.println("Key event ignored - game not active or no current piece");
             return;
@@ -182,21 +191,25 @@ public class Game implements GameEngine {
             case UP -> {
                 if (this.gridManager.performMove(this.currentPiece, MovementType.ROTATE)) {
                     System.out.println("Piece rotated");
+                    gameSoundController.onPieceRotated();
                 }
             }
             case DOWN -> {
                 if (this.gridManager.performMove(this.currentPiece, MovementType.DOWN)) {
                     System.out.println("Piece moved down (manual)");
+                    gameSoundController.onPieceMoved();
                 }
             }
             case LEFT -> {
                 if (this.gridManager.performMove(this.currentPiece, MovementType.LEFT)) {
                     System.out.println("Piece moved left");
+                    gameSoundController.onPieceMoved();
                 }
             }
             case RIGHT -> {
                 if (this.gridManager.performMove(this.currentPiece, MovementType.RIGHT)) {
                     System.out.println("Piece moved right");
+                    gameSoundController.onPieceMoved();
                 }
             }
         }
