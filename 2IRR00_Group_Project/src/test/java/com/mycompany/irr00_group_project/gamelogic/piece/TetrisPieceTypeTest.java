@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-// @author: Steve   
-
+/**
+ * Test class for TetrisPieceType.
+ * @author Steve
+ */
 public class TetrisPieceTypeTest {
 
     @Test
