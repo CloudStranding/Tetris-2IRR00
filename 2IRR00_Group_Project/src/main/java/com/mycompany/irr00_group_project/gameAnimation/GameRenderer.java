@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+
 /**
  * GameRenderer handles additional rendering utilities for the game.
  * Provides helper methods for special effects and UI overlays.
