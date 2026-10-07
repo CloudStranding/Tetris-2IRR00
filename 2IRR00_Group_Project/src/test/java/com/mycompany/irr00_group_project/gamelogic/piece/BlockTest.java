@@ -1,14 +1,11 @@
 package com.mycompany.irr00_group_project.gamelogic.piece;
 
-import java.awt.Point;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Point;
 import javafx.scene.paint.Color;
 
-// @author: Steve
 
 public class BlockTest {
 

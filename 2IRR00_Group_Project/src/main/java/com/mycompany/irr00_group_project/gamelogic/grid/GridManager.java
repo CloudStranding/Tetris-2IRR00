@@ -1,15 +1,12 @@
 package com.mycompany.irr00_group_project.gamelogic.grid;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.mycompany.irr00_group_project.gamelogic.MovementType;
 import com.mycompany.irr00_group_project.gamelogic.piece.Block;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
+
+
+import java.awt.Point;
+import java.util.*;
 
 /**
  * Will manage a tetris grid.
@@ -25,7 +22,7 @@ import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
  */
 public class GridManager {
 
-    private final List<TetrisPiece> pieces;
+    private List<TetrisPiece> pieces;
     private final TetrisPiece boundary;
     private final GridCollisionDetector collisionDetector;
     private final int gridWidth;
@@ -35,8 +32,8 @@ public class GridManager {
     /**
      * Constructor.
      *
-     * @param boundary tetris piece representing boundary of the grid
-     * @param gridWidth width of the grid
+     * @param boundary   tetris piece representing boundary of the grid
+     * @param gridWidth  width of the grid
      * @param gridHeight height of the grid
      * @author Jayson Leander, Yingyao Feng
      */
@@ -110,7 +107,7 @@ public class GridManager {
      * Will only do so if it doesn't cause a collision.
      *
      * @param piece piece to move
-     * @param move movement type
+     * @param move  movement type
      * @return true if piece has been moved and false otherwise
      * @author Jayson Leander, Yingyao Feng
      */
@@ -129,7 +126,7 @@ public class GridManager {
      * Clears full lines on the grid.
      * Moves pieces down when necessary if line gets cleared.
      *
-     * @return the number of lines cleared
+     * @return the amount of rows cleared
      * @author Jayson Leander, Yingyao Feng
      */
     public int clearFullLines() {
@@ -145,36 +142,34 @@ public class GridManager {
         List<Integer> fullRows = blocksByRow.entrySet().stream()
                 .filter(entry -> entry.getValue().size() == gridWidth)
                 .map(Map.Entry::getKey)
-                .sorted() // TODO maybe change for performance
+                .sorted()
                 .toList();
 
         if (fullRows.isEmpty()) {
-            return 0; // No lines cleared
+            fullGridRebuild();
+            return 0;
         }
-
-        int linesCleared = fullRows.size();
-        System.out.println("Clearing " + linesCleared + " full lines: " + fullRows);
 
         for (TetrisPiece piece : pieces) {
             piece.getBlocks().removeIf(block -> fullRows.contains(block.getPos().y));
         }
 
-        for (int clearedY : fullRows) {
-            for (TetrisPiece piece : pieces) {
-                for (Block block : piece.getBlocks()) {
-                    if (block.getPos().y < clearedY) {
-                        Point oldPos = block.getPos();
+        for (TetrisPiece piece : pieces) {
+            for (Block block : piece.getBlocks()) {
+                int currentY = block.getPos().y;
+                long dropDistance = fullRows.stream()
+                        .filter(clearedY -> clearedY > currentY)
+                        .count();
 
-                        block.setPos(new Point(oldPos.x, oldPos.y + 1));
-                    }
+                if (dropDistance > 0) {
+                    Point oldPos = block.getPos();
+                    block.setPos(new Point(oldPos.x, oldPos.y + (int) dropDistance));
                 }
             }
         }
 
         fullGridRebuild();
-        
-        System.out.println("Successfully cleared " + linesCleared + " lines");
-        return linesCleared;
+        return fullRows.size();
     }
 
     /**
@@ -185,5 +180,16 @@ public class GridManager {
      */
     public List<TetrisPiece> getPieces() {
         return this.pieces;
+    }
+
+    /**
+     * Sets the pieces in the grid.
+     *
+     * @param pieces pieces to set the grid to
+     * @author Jayson Leander, Yingyao Feng
+     */
+    protected void setPieces(List<TetrisPiece> pieces) {
+        this.pieces = pieces;
+        fullGridRebuild();
     }
 }

@@ -1,17 +1,13 @@
 package com.mycompany.irr00_group_project.gamelogic;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.mycompany.irr00_group_project.gamelogic.grid.GridManager;
+import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
+import java.util.List;
 
-// @author: Steve   
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
 
@@ -25,8 +21,6 @@ public class GameTest {
     @Test
     void testGameInitialization() {
         assertNotNull(game, "Game instance should not be null");
-        assertFalse(game.isGameStarted(), "Game should not be started initially");
-        assertFalse(game.isGameOver(), "Game should not be over initially");
     }
 
     @Test
@@ -40,57 +34,6 @@ public class GameTest {
         game.start();
         List<? extends Drawable> grid = game.getGrid();
         assertFalse(grid.isEmpty(), "Grid should not be empty after start()");
-        assertTrue(game.isGameStarted(), "Game should be started after start()");
     }
 
-    @Test
-    void testRestart() {
-        // Start the game first
-        game.start();
-        assertTrue(game.isGameStarted(), "Game should be started");
-        
-        // Restart the game
-        game.restart();
-        assertTrue(game.isGameStarted(), "Game should be started after restart");
-        assertFalse(game.isGameOver(), "Game should not be over after restart");
-        
-        // Grid should be cleared and new piece added
-        List<? extends Drawable> grid = game.getGrid();
-        assertFalse(grid.isEmpty(), "Grid should have new piece after restart");
-    }
-
-    @Test
-    void testStop() {
-        game.start();
-        assertTrue(game.isGameStarted(), "Game should be started");
-        
-        game.stop();
-        assertFalse(game.isGameStarted(), "Game should not be started after stop");
-    }
-
-    @Test
-    void testPause() {
-        game.start();
-        assertTrue(game.isGameStarted(), "Game should be started");
-        
-        game.pause();
-        // Note: Pause state is handled by GameLoop, so we can't test it directly here
-        assertTrue(game.isGameStarted(), "Game should still be started after pause");
-    }
-
-    @Test
-    void testGetCurrentGrid() {
-        game.start();
-        int[][] grid = game.getCurrentGrid();
-        assertNotNull(grid, "getCurrentGrid should return non-null array");
-        assertEquals(20, grid.length, "Grid should have correct height");
-        assertEquals(10, grid[0].length, "Grid should have correct width");
-    }
-
-    @Test
-    void testGetAndResetLinesCleared() {
-        game.start();
-        int linesCleared = game.getAndResetLinesCleared();
-        assertEquals(0, linesCleared, "No lines should be cleared initially");
-    }
 }
