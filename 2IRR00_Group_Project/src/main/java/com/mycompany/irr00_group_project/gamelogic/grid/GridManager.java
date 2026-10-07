@@ -1,15 +1,12 @@
 package com.mycompany.irr00_group_project.gamelogic.grid;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.mycompany.irr00_group_project.gamelogic.MovementType;
 import com.mycompany.irr00_group_project.gamelogic.piece.Block;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
+
+
+import java.awt.Point;
+import java.util.*;
 
 /**
  * Will manage a tetris grid.
@@ -129,10 +126,9 @@ public class GridManager {
      * Clears full lines on the grid.
      * Moves pieces down when necessary if line gets cleared.
      *
-     * @return the number of lines cleared
      * @author Jayson Leander, Yingyao Feng
      */
-    public int clearFullLines() {
+    public void clearFullLines() {
         Map<Integer, List<Block>> blocksByRow = new HashMap<>();
 
         for (TetrisPiece piece : pieces) {
@@ -149,11 +145,8 @@ public class GridManager {
                 .toList();
 
         if (fullRows.isEmpty()) {
-            return 0; // No lines cleared
+            return;
         }
-
-        int linesCleared = fullRows.size();
-        System.out.println("Clearing " + linesCleared + " full lines: " + fullRows);
 
         for (TetrisPiece piece : pieces) {
             piece.getBlocks().removeIf(block -> fullRows.contains(block.getPos().y));
@@ -172,9 +165,6 @@ public class GridManager {
         }
 
         fullGridRebuild();
-        
-        System.out.println("Successfully cleared " + linesCleared + " lines");
-        return linesCleared;
     }
 
     /**

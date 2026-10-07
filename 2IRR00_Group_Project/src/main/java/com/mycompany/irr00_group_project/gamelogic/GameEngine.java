@@ -1,9 +1,9 @@
 package com.mycompany.irr00_group_project.gamelogic;
 
-import java.util.List;
-
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+
+import java.util.List;
 
 /**
  * An interface that represents a game engine for tetris.

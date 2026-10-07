@@ -1,12 +1,20 @@
 package com.mycompany.irr00_group_project.scoresystem;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.LinkedHashMap;
+
 public class ScoreManager implements ScoreServices {
 
     private int score;
+    private Map<String, Integer> playerScores;
 
+    /**
+     * Initialization, creates playerScores to store all player's score.
+     */
     public ScoreManager() {
         this.score = 0;
-        System.out.println("ScoreManager initialized");
+        this.playerScores = new HashMap<>();
     }
 
     /**
@@ -15,50 +23,21 @@ public class ScoreManager implements ScoreServices {
     @Override
     public void resetScore() {
         this.score = 0;
-        System.out.println("Score reset to 0");
     }
 
     /**
      * @param linesCleared the number of linesCleaned each time returned by GridManager
-     * Calculate and update score according to classic Tetris scoring:
-     * - No lines cleared (piece placement only): 0 points
-     * - Single line clear: 40 points
-     * - Double line clear: 100 points
-     * - Triple line clear: 300 points
-     * - Tetris (4 lines): 1200 points
+     * Calculate and update score
      */
     @Override
     public void updateScore(int linesCleared) {
-        int pointsAdded = 0;
         switch (linesCleared) {
-            case 1 -> pointsAdded = 40;   // Single line clear
-            case 2 -> pointsAdded = 100;  // Double line clear
-            case 3 -> pointsAdded = 300;  // Triple line clear
-            case 4 -> pointsAdded = 1200; // Tetris (4 lines)
-            case 0 -> pointsAdded = 0;    // Piece placement only, no points
-            default -> pointsAdded = 0;   // Shouldn't happen, but safe fallback
+            case 1 -> score += 100;
+            case 2 -> score += 300;
+            case 3 -> score += 500;
+            case 4 -> score += 800;
+            default -> score += 0;
         }
-        score += pointsAdded;
-        
-        if (pointsAdded > 0) {
-            System.out.println("Score updated: +" + pointsAdded + " points (" + 
-                             getLinesDescription(linesCleared) + ") = " + score);
-        } else if (linesCleared == 0) {
-            System.out.println("Piece placed (no lines cleared) - no points added");
-        }
-    }
-    
-    /**
-     * Returns a descriptive string for the number of lines cleared.
-     */
-    private String getLinesDescription(int linesCleared) {
-        return switch (linesCleared) {
-            case 1 -> "Single line clear";
-            case 2 -> "Double line clear";
-            case 3 -> "Triple line clear";
-            case 4 -> "TETRIS!";
-            default -> linesCleared + " lines";
-        };
     }
 
     /**
@@ -67,5 +46,37 @@ public class ScoreManager implements ScoreServices {
     @Override
     public int getScore() {
         return score;
+    }
+
+    /**
+     * Stores username together with this round's score.
+     * @param username given by user input, everytime the game is restarted, user will be asked to input username
+     */
+    public void storeScore(String username) {
+        playerScores.put(username, score);
+    }
+
+    /**
+     * @return the HashMap playerScores.
+     */
+    public Map<String, Integer> getStoredScores() {
+        return playerScores;
+    }
+
+    /**
+     * @return a new LinkedHashMap of player scores sorted in descending order.
+     */
+    public Map<String, Integer> getSortedScores() {
+        return playerScores.entrySet()
+                .stream()
+                .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+                .collect(
+                        java.util.stream.Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new
+                        )
+                );
     }
 }

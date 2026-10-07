@@ -13,18 +13,17 @@ import java.util.Random;
 public enum TetrisPieceType {
     O, S, L, J, T, I, Z, BOUNDARY;
 
-    // Only include game pieces, not BOUNDARY
-    private static final List<TetrisPieceType> GAME_PIECES = List.of(O, S, L, J, T, I, Z);
-    private static final int GAME_PIECES_SIZE = GAME_PIECES.size();
+    private static final List<TetrisPieceType> VALUES = List.of(values());
+    private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new SecureRandom();
 
     /**
-     * Returns a random game piece type (excludes BOUNDARY).
+     * Returns a random piece type.
      *
-     * @return a random {@code TetrisPieceType} for gameplay
+     * @return a random {@code TetrisPieceType}
      * @author Jayson Leander, Yingyao Feng
      */
     public static TetrisPieceType randomPieceType()  {
-        return GAME_PIECES.get(RANDOM.nextInt(GAME_PIECES_SIZE));
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

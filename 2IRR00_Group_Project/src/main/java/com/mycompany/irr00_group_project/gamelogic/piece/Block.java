@@ -1,11 +1,10 @@
 package com.mycompany.irr00_group_project.gamelogic.piece;
 
-import java.awt.Point;
-
 import com.mycompany.irr00_group_project.gamelogic.Drawable;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 /**
  * Object that represents a block.
@@ -38,28 +37,11 @@ public class Block implements Drawable, Cloneable {
 
     @Override
     public void draw(GraphicsContext gc) {
-        double x = this.pos.getX() * this.size;
-        double y = this.pos.getY() * this.size;
-        
-        // Don't draw boundary blocks (they have BLACK color and negative positions)
-        // Don't draw blocks that are completely outside the visible area
-        if (this.color == Color.BLACK || this.pos.getY() < 0 || x < 0) {
-            return;
-        }
-        
-        // Fill the block with its color
         gc.setFill(this.color);
-        gc.fillRect(x, y, this.size, this.size);
-        
-        // Add a darker border for better visibility
-        gc.setStroke(this.color.darker());
-        gc.setLineWidth(2);
-        gc.strokeRect(x, y, this.size, this.size);
-        
-        // Add a lighter inner border for 3D effect
-        gc.setStroke(this.color.brighter());
-        gc.setLineWidth(1);
-        gc.strokeRect(x + 1, y + 1, this.size - 2, this.size - 2);
+        gc.fillRect(this.pos.getX() * this.size,
+                this.pos.getY() * this.size,
+                this.size,
+                this.size);
     }
 
     /**
@@ -80,15 +62,6 @@ public class Block implements Drawable, Cloneable {
      */
     public Point getPos() {
         return pos;
-    }
-
-    /**
-     * Returns the color of the block.
-     *
-     * @return color of the block
-     */
-    public Color getColor() {
-        return color;
     }
 
     @Override

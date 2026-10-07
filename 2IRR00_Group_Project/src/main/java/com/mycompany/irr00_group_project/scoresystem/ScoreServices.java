@@ -1,7 +1,10 @@
 package com.mycompany.irr00_group_project.scoresystem;
 
-//ToDo int linesCleaned need to be added into the GridManager part
+import java.util.Map;
 
+
+//ToDo int linesCleaned need to be added into the GridManager part
+//ToDo String username should be offered by Userinput part
 public interface ScoreServices {
     /**
      * Initialize and reset score to 0
@@ -19,5 +22,21 @@ public interface ScoreServices {
      */
     int getScore();
 
+    /**
+     * Store the current score associated with the given username.
+     * This should be called once after the game ends.
+     * @param username the player's username
+     */
+    void storeScore(String username);
+
+    /**
+     * @return map of all stored scores with usernames
+     */
+    Map<String, Integer> getStoredScores();
+
+    /**
+     * @return sorted map of scores in descending order
+     */
+    Map<String, Integer> getSortedScores();
 
 }
