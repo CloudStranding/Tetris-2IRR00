@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.gameAnimation;
+package com.mycompany.irr00_group_project.gameanimation;
 
 import java.util.function.Consumer;
 

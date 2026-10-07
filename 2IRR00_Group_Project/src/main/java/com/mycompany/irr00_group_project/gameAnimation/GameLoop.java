@@ -1,6 +1,7 @@
-package com.mycompany.irr00_group_project.gameAnimation;
+package com.mycompany.irr00_group_project.gameanimation;
 
 import com.mycompany.irr00_group_project.gamelogic.GameEngine;
+import com.mycompany.irr00_group_project.sound.SoundManager;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
@@ -53,12 +54,14 @@ public class GameLoop {
                 if (now - lastUpdate >= OPTIMAL_TIME) {
                     if (!isPaused) {
                         gameUpdate();
-                        // Don't call render() here as it's handled by the callback
-                        // The callback will handle all rendering
+                    }
+                    
+                        // Always run render callback for UI updates and game over detection
+                        // The callback will handle all rendering and state checks
                         if (renderCallback != null) {
                             renderCallback.run();
-                        }
                     }
+                    
                     lastUpdate = now;
                 }
             }
@@ -127,6 +130,8 @@ public class GameLoop {
             animationTimer.start();
             gameTimer.start();
             System.out.println("GameLoop started");
+            // Play background music
+            SoundManager.playBackgroundMusic();
         }
     }
     
@@ -139,6 +144,8 @@ public class GameLoop {
             animationTimer.stop();
             gameTimer.stop();
             System.out.println("GameLoop stopped");
+            // Stop background music
+            SoundManager.stopBackgroundMusic();            
         }
     }
     
@@ -150,6 +157,8 @@ public class GameLoop {
             isPaused = true;
             gameTimer.pause();
             System.out.println("GameLoop paused");
+            // Pause background music
+            SoundManager.pauseBackgroundMusic();
         }
     }
     
@@ -162,6 +171,8 @@ public class GameLoop {
             lastUpdate = System.nanoTime(); // Reset to avoid jump
             gameTimer.resume();
             System.out.println("GameLoop resumed");
+            // Resume background music
+            SoundManager.playBackgroundMusic();
         }
     }
     

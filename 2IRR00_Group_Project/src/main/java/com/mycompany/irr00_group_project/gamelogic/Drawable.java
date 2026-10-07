@@ -12,7 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 public interface Drawable {
 
     /**
-     * Draw this object on a {@code Canvas}.
+     * Draws this object on a {@code Canvas}.
      *
      * @param gc retrieved using {@code canvas.getGraphicsContext2D()}
      * @author Jayson Leander, Yinyao Feng

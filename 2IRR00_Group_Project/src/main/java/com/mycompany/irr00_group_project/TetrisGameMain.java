@@ -1,20 +1,20 @@
 package com.mycompany.irr00_group_project;
 
-import com.mycompany.irr00_group_project.GUI.ui.DifficultyScreen;
-import com.mycompany.irr00_group_project.GUI.ui.GameScreen;
-import com.mycompany.irr00_group_project.GUI.ui.InstructionScreen;
-import com.mycompany.irr00_group_project.GUI.ui.MainMenuScreen;
-import com.mycompany.irr00_group_project.gameAnimation.GameController;
-import com.mycompany.irr00_group_project.gameAnimation.GameRenderer;
+import com.mycompany.irr00_group_project.gameanimation.GameController;
+import com.mycompany.irr00_group_project.gameanimation.GameRenderer;
+import com.mycompany.irr00_group_project.gui.DifficultyScreen;
+import com.mycompany.irr00_group_project.gui.GameScreen;
+import com.mycompany.irr00_group_project.scoresystem.ScoreManager;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
  * Main Tetris game application using modularized GUI components.
- * Redesigned UI flow: Main Menu → Game Screen → Pause Overlay
+ * Redesigned UI flow: Main Menu → Game Screen → Pause Overlay.
+ *
  */
-public class TetrisGameMain extends Application {
+public class TetrisGameMain extends Application implements ScreenManager.NavigationHandler {
     
     private static final int GRID_WIDTH = 10;
     private static final int GRID_HEIGHT = 20;
@@ -25,22 +25,19 @@ public class TetrisGameMain extends Application {
     private GameController gameController;
     private GameRenderer gameRenderer;
     
-    // UI components (modularized)
-    private Stage primaryStage;
-    private MainMenuScreen mainMenuScreen;
+    // Screen management
+    private ScreenManager screenManager;
     private GameScreen gameScreen;
-    private DifficultyScreen difficultyScreen;
-    private InstructionScreen instructionScreen;
     
     // Game state
     private int selectedDifficulty = 1;
+    private String currentUsername = "Player";
     
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        
-        // Initialize all UI screens
-        initializeScreens();
+        // Initialize screen manager
+        screenManager = new ScreenManager(primaryStage);
+        screenManager.setupEventHandlers(this);
         
         // Configure stage
         primaryStage.setTitle("Tetris - Team Project");
@@ -49,36 +46,6 @@ public class TetrisGameMain extends Application {
         // Start with main menu
         showMainMenu();
         primaryStage.show();
-    }
-    
-    /**
-     * Initialize all UI screens and their event handlers.
-     */
-    private void initializeScreens() {
-        // Create screens
-        mainMenuScreen = new MainMenuScreen();
-        difficultyScreen = new DifficultyScreen();
-        instructionScreen = new InstructionScreen();
-        
-        // Set up main menu event handlers
-        mainMenuScreen.getStartGameButton().setOnAction(e -> startGame());
-        mainMenuScreen.getDifficultyButton().setOnAction(e -> showDifficultySelection());
-        mainMenuScreen.getInstructionButton().setOnAction(e -> showInstructions());
-        
-        // Set up difficulty screen event handlers
-        for (int i = 0; i < difficultyScreen.getDifficultyButtons().length; i++) {
-            final int level = i + 1;
-            difficultyScreen.getDifficultyButtons()[i].setOnAction(e -> {
-                selectedDifficulty = level;
-                difficultyScreen.setSelectedDifficulty(level);
-                mainMenuScreen.updateDifficulty(level);
-                showMainMenu();
-            });
-        }
-        difficultyScreen.getBackButton().setOnAction(e -> showMainMenu());
-        
-        // Set up instruction screen event handlers
-        instructionScreen.getBackButton().setOnAction(e -> showMainMenu());
     }
     
     /**
@@ -99,8 +66,7 @@ public class TetrisGameMain extends Application {
         
         // Set up game screen event handlers
         gameScreen.getPauseButton().setOnAction(e -> {
-            gameController.togglePause();
-            gameScreen.showPauseOverlay();
+            pauseGame();
         });
         
         // Set up pause overlay event handlers
@@ -116,6 +82,10 @@ public class TetrisGameMain extends Application {
             showMainMenu();
         });
         
+        gameScreen.getPauseOverlay().getScoreboardButton().setOnAction(e -> {
+            showScoreboardDialog();
+        });
+        
         // Set up game over overlay event handlers
         gameScreen.getGameOverOverlay().getRestartButton().setOnAction(e -> {
             gameController.stopGame();
@@ -128,11 +98,18 @@ public class TetrisGameMain extends Application {
             gameScreen.renderGame();
             gameScreen.updateUI();
             
-            // Handle game over - show overlay instead of using GameRenderer
+            // Handle game over - show overlay and save score
             if (gameController.isGameOver() && !gameScreen.isGameOverOverlayVisible()) {
+                // Save the final score when game ends
+                saveGameScore();
                 gameScreen.showGameOverOverlay();
             }
         });
+    }
+
+    private void pauseGame() {
+        gameController.togglePause();
+        gameScreen.showPauseOverlay();
     }
     
     /**
@@ -145,8 +122,11 @@ public class TetrisGameMain extends Application {
         // Initialize fresh game components
         initializeGameComponents();
         
+        // Set username for scoring
+        gameEngine.setCurrentUsername(currentUsername);
+        
         // Show game screen
-        primaryStage.setScene(gameScreen.getScene());
+        screenManager.showGameScreen(gameScreen);
         
         // Set difficulty (multiply by 2 for game engine scaling)
         gameController.setDifficulty(selectedDifficulty * 2);
@@ -157,38 +137,69 @@ public class TetrisGameMain extends Application {
         // Focus on game for keyboard input
         gameScreen.getScene().getRoot().requestFocus();
         
-        System.out.println("Game started with difficulty: " + selectedDifficulty + " (" + 
-                          DifficultyScreen.getDifficultyName(selectedDifficulty) + ")");
+        System.out.println("Game started with difficulty: " + selectedDifficulty 
+            + " (" + DifficultyScreen.getDifficultyName(selectedDifficulty) + ")");
     }
     
     /**
-     * Show main menu.
+     * Save the current game score.
      */
-    private void showMainMenu() {
-        mainMenuScreen.updateDifficulty(selectedDifficulty);
-        primaryStage.setScene(mainMenuScreen.getScene());
-        primaryStage.centerOnScreen();
+    private void saveGameScore() {
+        if (gameEngine != null) {
+            // Save the final score
+            gameEngine.setCurrentUsername(currentUsername);
+            gameEngine.getScoreManager().storeFinalScore(currentUsername);
+            System.out.println("Game Over! Final score saved: " + currentUsername 
+                + " - " + gameEngine.getScore());
+        }
     }
     
-    /**
-     * Show difficulty selection screen.
-     */
-    private void showDifficultySelection() {
-        difficultyScreen.setSelectedDifficulty(selectedDifficulty);
-        primaryStage.setScene(difficultyScreen.getScene());
+    // NavigationHandler implementation
+    @Override
+    public void showMainMenu() {
+        screenManager.showMainMenu(selectedDifficulty);
     }
     
-    /**
-     * Show instructions screen.
-     */
-    private void showInstructions() {
-        primaryStage.setScene(instructionScreen.getScene());
+    @Override
+    public void showDifficultySelection() {
+        screenManager.showDifficultySelection(selectedDifficulty);
     }
     
-    /**
-     * Main method.
-     */
-    public static void main(String[] args) {
-        launch(args);
+    @Override
+    public void showInstructions() {
+        screenManager.showInstructions();
+    }
+    
+    @Override
+    public void showUsernameScreen() {
+        screenManager.showUsernameScreen();
+    }
+    
+    @Override
+    public void showScoreboardDialog() {
+        if (gameEngine != null) {
+            screenManager.showScoreboardDialog(gameEngine.getScoreManager());
+        } else {
+            // Show empty scoreboard when no game is running
+            ScoreManager tempScoreManager = new ScoreManager();
+            screenManager.showScoreboardDialog(tempScoreManager);
+        }
+    }
+    
+    @Override
+    public void selectDifficulty(int level) {
+        selectedDifficulty = level;
+        screenManager.getDifficultyScreen().setSelectedDifficulty(level);
+        screenManager.getMainMenuScreen().updateDifficulty(level);
+        showMainMenu();
+    }
+    
+    @Override
+    public void startGameWithUsername(String username) {
+        // Store username for scoreboard
+        currentUsername = username;
+        
+        // Start the game
+        startGame();
     }
 } 

@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.gameAnimation;
+package com.mycompany.irr00_group_project.gameanimation;
 
 import com.mycompany.irr00_group_project.EnhancedGameEngine;
 
@@ -155,7 +155,8 @@ public class GameController {
      * @return true if game is running, false otherwise
      */
     public boolean isGameRunning() {
-        return isGameStarted && gameEngine.isGameStarted() && !gameEngine.isGameOver() && gameLoop.isRunning();
+        return isGameStarted && gameEngine.isGameStarted() 
+                && !gameEngine.isGameOver() && gameLoop.isRunning();
     }
     
     /**

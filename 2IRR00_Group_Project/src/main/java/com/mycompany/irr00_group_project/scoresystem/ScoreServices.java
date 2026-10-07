@@ -1,23 +1,27 @@
 package com.mycompany.irr00_group_project.scoresystem;
 
-//ToDo int linesCleaned need to be added into the GridManager part
-
+/**
+ * Interface for score-related services in the Tetris game.
+ * Defines methods for managing and updating the game score.
+ *
+ */
 public interface ScoreServices {
     /**
-     * Initialize and reset score to 0
+     * Initializes and resets score to 0.
      */
     void resetScore();
 
     /**
-     * @param linesCleaned the number of linesCleaned each time returned by GridManager
-     * Calculate and update score
+     * Updates the score based on the number of lines cleared.
+     *
+     * @param linesCleaned the number of lines cleared, returned by GridManager
      */
     void updateScore(int linesCleaned);
 
     /**
+     * Gets the current score.
+     *
      * @return the current score
      */
     int getScore();
-
-
 }

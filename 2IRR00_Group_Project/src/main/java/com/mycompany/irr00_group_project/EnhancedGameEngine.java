@@ -18,13 +18,19 @@ public class EnhancedGameEngine implements GameEngine {
     
     private final Game game;
     private final ScoreManager scoreManager;
-    private int previousScore;
     private int previousPieceCount;
+    private String currentUsername;
     
+    /**
+     * Creates a new EnhancedGameEngine with the specified grid dimensions.
+     *
+     * @param gridWidth The width of the game grid
+     * @param gridHeight The height of the game grid
+     * @param blockSize The size of each block in pixels
+     */
     public EnhancedGameEngine(int gridWidth, int gridHeight, int blockSize) {
         this.game = new Game(gridWidth, gridHeight, blockSize);
         this.scoreManager = new ScoreManager();
-        this.previousScore = 0;
         this.previousPieceCount = 0;
         System.out.println("EnhancedGameEngine created with grid " + gridWidth + "x" + gridHeight);
     }
@@ -34,7 +40,6 @@ public class EnhancedGameEngine implements GameEngine {
         System.out.println("Starting enhanced game engine...");
         game.start();
         scoreManager.resetScore();
-        previousScore = 0;
         previousPieceCount = 0;
         System.out.println("Game started. Initial pieces: " + game.getGrid().size());
     }
@@ -58,7 +63,6 @@ public class EnhancedGameEngine implements GameEngine {
         System.out.println("Restarting enhanced game engine...");
         game.restart();
         scoreManager.resetScore();
-        previousScore = 0;
         previousPieceCount = 0;
         System.out.println("Game restarted. Pieces: " + game.getGrid().size());
     }
@@ -78,7 +82,8 @@ public class EnhancedGameEngine implements GameEngine {
         // Get accurate line clearing information from the game
         int linesCleared = game.getAndResetLinesCleared();
         if (linesCleared > 0) {
-            System.out.println("Lines cleared: " + linesCleared + " (accurate count from GridManager)");
+            System.out.println("Lines cleared: " + linesCleared 
+                    + " (accurate count from GridManager)");
             scoreManager.updateScore(linesCleared);
             System.out.println("Score updated to: " + scoreManager.getScore());
         }
@@ -86,7 +91,8 @@ public class EnhancedGameEngine implements GameEngine {
         // Track piece placement for debugging
         int piecesAfter = game.getGrid().size();
         if (piecesAfter > piecesBefore) {
-            System.out.println("Piece placed. Current pieces: " + piecesAfter + " (no points for placement)");
+            System.out.println("Piece placed. Current pieces: " + piecesAfter 
+                    + " (no points for placement)");
         }
         
         previousPieceCount = piecesAfter;
@@ -109,6 +115,8 @@ public class EnhancedGameEngine implements GameEngine {
     
     /**
      * Gets the current grid as a 2D array.
+     *
+     * @return The current game grid as a 2D array
      */
     public int[][] getCurrentGrid() {
         return game.getCurrentGrid();
@@ -116,6 +124,8 @@ public class EnhancedGameEngine implements GameEngine {
     
     /**
      * Gets the current score.
+     *
+     * @return The current game score
      */
     public int getScore() {
         return scoreManager.getScore();
@@ -123,6 +133,8 @@ public class EnhancedGameEngine implements GameEngine {
     
     /**
      * Gets the score manager for external access.
+     *
+     * @return The score manager instance
      */
     public ScoreManager getScoreManager() {
         return scoreManager;
@@ -130,6 +142,8 @@ public class EnhancedGameEngine implements GameEngine {
     
     /**
      * Checks if the game is over.
+     *
+     * @return True if the game is over, false otherwise
      */
     public boolean isGameOver() {
         return game.isGameOver();
@@ -137,8 +151,28 @@ public class EnhancedGameEngine implements GameEngine {
     
     /**
      * Checks if the game is started.
+     *
+     * @return True if the game is started, false otherwise
      */
     public boolean isGameStarted() {
         return game.isGameStarted();
+    }
+
+    /**
+     * Sets the username for the current game.
+     *
+     * @param username The username to set
+     */
+    public void setCurrentUsername(String username) {
+        this.currentUsername = username;
+    }
+
+    /**
+     * Gets the username for the current game.
+     *
+     * @return The current username
+     */
+    public String getCurrentUsername() {
+        return currentUsername;
     }
 } 
