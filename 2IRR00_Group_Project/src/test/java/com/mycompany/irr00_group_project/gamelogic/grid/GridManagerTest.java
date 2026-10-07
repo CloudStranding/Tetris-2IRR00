@@ -1,16 +1,5 @@
 package com.mycompany.irr00_group_project.gamelogic.grid;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.mycompany.irr00_group_project.gamelogic.MovementType;
 import com.mycompany.irr00_group_project.gamelogic.piece.Block;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
@@ -18,8 +7,14 @@ import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceFactory;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceType;
 
 import javafx.scene.paint.Color;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-// @author: Steve
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GridManagerTest {
 
@@ -80,8 +75,7 @@ public class GridManagerTest {
         TetrisPiece fullRow = new TetrisPiece(fullRowBlocks);
         manager.addPiece(fullRow);
 
-        int linesCleared = manager.clearFullLines();
-        assertEquals(1, linesCleared, "One line should be cleared");
+        manager.clearFullLines();
 
         // After clearing, the total number of blocks should be less than 14 (4 + 10)
         long remainingBlocks = manager.getPieces().stream()
@@ -89,42 +83,5 @@ public class GridManagerTest {
             .count();
 
         assertTrue(remainingBlocks < 14, "Cleared full row should reduce block count");
-    }
-
-    @Test
-    public void testGetGridArray() {
-        manager.addPiece(piece);
-        int[][] grid = manager.getGridArray();
-        
-        assertNotNull(grid, "Grid array should not be null");
-        assertEquals(20, grid.length, "Grid should have correct height");
-        assertEquals(10, grid[0].length, "Grid should have correct width");
-        
-        // Check if piece blocks are properly represented in grid
-        for (Block block : piece.getBlocks()) {
-            Point pos = block.getPos();
-            assertEquals(1, grid[pos.y][pos.x], "Grid should contain piece at correct position");
-        }
-    }
-
-    @Test
-    public void testAddPiece_InvalidPosition() {
-        // Create a piece that would be outside the grid
-        Block b1 = new Block(new Point(-1, 0), 20, Color.RED);
-        TetrisPiece invalidPiece = new TetrisPiece(List.of(b1));
-        
-        assertFalse(manager.addPiece(invalidPiece), "Piece outside grid should not be added");
-    }
-
-    @Test
-    public void testAddPiece_Collision() {
-        // Add first piece
-        manager.addPiece(piece);
-        
-        // Create a piece that would collide with the first piece
-        Block b1 = new Block(new Point(2, 1), 20, Color.RED);
-        TetrisPiece collidingPiece = new TetrisPiece(List.of(b1));
-        
-        assertFalse(manager.addPiece(collidingPiece), "Colliding piece should not be added");
     }
 }

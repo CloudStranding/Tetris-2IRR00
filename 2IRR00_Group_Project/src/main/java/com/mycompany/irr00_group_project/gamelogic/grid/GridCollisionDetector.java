@@ -1,11 +1,9 @@
 package com.mycompany.irr00_group_project.gamelogic.grid;
 
-import java.awt.Point;
-import java.util.List;
-
 import com.mycompany.irr00_group_project.gamelogic.MovementType;
-import com.mycompany.irr00_group_project.gamelogic.piece.Block;
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
+
+import java.util.List;
 
 /**
  * Object that will detect collisions with other tetris pieces.
@@ -58,73 +56,14 @@ public class GridCollisionDetector {
 
     /**
      * Checks if piece can be added to the grid.
-     * For proper Tetris gameplay, only the visible part of the piece (y >= 0) 
-     * should be checked for conflicts with existing pieces.
+     * Grid is supplied as reference in constructor or getter.
      *
      * @param piece tetris piece to check with
      * @return true if adding doesn't cause a collision and false if otherwise
      * @author Jayson Leander, Yingyao Feng
      */
     public boolean canBeAdded(TetrisPiece piece) {
-        // Check if the VISIBLE part of the new piece conflicts with existing pieces
-        boolean visiblePartConflicts = hasVisiblePartConflict(piece);
-        
-        // Check if any part of the piece goes outside the side/bottom boundaries
-        boolean intersectsWithBoundaries = intersectsWithSideOrBottomBoundary(piece);
-        
-        boolean canAdd = !visiblePartConflicts && !intersectsWithBoundaries;
-        
-        // Only log when there's a conflict to reduce noise
-        if (!canAdd) {
-            System.out.println("canBeAdded: CONFLICT - visibleConflict=" + visiblePartConflicts + 
-                              ", boundaryConflict=" + intersectsWithBoundaries);
-        }
-        
-        return canAdd;
-    }
-    
-    /**
-     * Checks if the visible part of the new piece (blocks with y >= 0) 
-     * conflicts with any existing pieces.
-     */
-    private boolean hasVisiblePartConflict(TetrisPiece newPiece) {
-        for (Block newBlock : newPiece.getBlocks()) {
-            // Only check blocks that are in the visible area (y >= 0)
-            if (newBlock.getPos().y >= 0) {
-                // Check against all existing pieces
-                for (TetrisPiece existingPiece : pieces) {
-                    for (Block existingBlock : existingPiece.getBlocks()) {
-                        if (newBlock.getPos().equals(existingBlock.getPos())) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Checks if the piece intersects with side or bottom boundaries.
-     * Top boundary checking is excluded to allow pieces to spawn above the visible area.
-     */
-    private boolean intersectsWithSideOrBottomBoundary(TetrisPiece piece) {
-        for (Block pieceBlock : piece.getBlocks()) {
-            Point piecePos = pieceBlock.getPos();
-            
-            for (Block boundaryBlock : boundary.getBlocks()) {
-                Point boundaryPos = boundaryBlock.getPos();
-                
-                // Only check side and bottom boundaries:
-                // Side boundaries: x < 0 or x >= gridWidth
-                // Bottom boundaries: y >= gridHeight
-                // Skip top boundaries (y < 0) to allow spawning above visible area
-                if (boundaryPos.y >= 0 && piecePos.equals(boundaryPos)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return !intersectsPieces(piece, pieces, null);
     }
 
     private boolean intersectsPieces(TetrisPiece piece,

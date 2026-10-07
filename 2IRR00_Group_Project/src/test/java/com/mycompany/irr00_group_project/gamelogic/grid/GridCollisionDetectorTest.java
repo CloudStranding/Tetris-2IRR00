@@ -1,20 +1,14 @@
 package com.mycompany.irr00_group_project.gamelogic.grid;
 
-import java.awt.Point;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.mycompany.irr00_group_project.gamelogic.MovementType;
+import com.mycompany.irr00_group_project.gamelogic.piece.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mycompany.irr00_group_project.gamelogic.MovementType;
-import com.mycompany.irr00_group_project.gamelogic.piece.Block;
-import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
-import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceFactory;
-import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceType;
+import java.awt.*;
+import java.util.List;
 
-// @author: Steve
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GridCollisionDetectorTest {
 
