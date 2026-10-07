@@ -1,0 +1,228 @@
+package com.mycompany.irr00_group_project.gamelogic;
+
+
+import java.util.List;
+
+import com.mycompany.irr00_group_project.gamelogic.grid.GridManager;
+import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
+import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceFactory;
+import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPieceType;
+
+import javafx.scene.input.KeyEvent;
+
+/**
+ * Objects that represents a {@code GameEngine} for tetris.
+ * Has a current piece that represents the piece that will be moving per update.
+ *
+ * @author Jayson Leander, Yingyao Feng
+ */
+public class Game implements GameEngine {
+
+    private final GridManager gridManager;
+    private TetrisPiece currentPiece;
+    private TetrisPiece nextPiece;
+    private final TetrisPieceFactory factory;
+    private boolean gameOver = false;
+    private boolean gameStarted = false;
+    private int lastLinesCleared = 0; // Track lines cleared in last update
+
+    /**
+     * Constructor.
+     *
+     * @param gridWidth width of the grid
+     * @param gridHeight height of the grid
+     * @param blockSize size of individual blocks which form a tetris piece
+     * @author Jayson Leander, Yingyao Feng
+     */
+    public Game(int gridWidth, int gridHeight, int blockSize) {
+        this.factory = new TetrisPieceFactory(gridWidth, gridHeight, blockSize);
+        this.gridManager = new GridManager(this.factory.createTetrisPiece(TetrisPieceType.BOUNDARY),
+                gridWidth,
+                gridHeight);
+        System.out.println("Game created with grid " + gridWidth + "x" + gridHeight);
+    }
+
+    @Override
+    public void update() {
+        if (!gameStarted || gameOver) {
+            System.out.println("Game update skipped - gameStarted: " + gameStarted + ", gameOver: " + gameOver);
+            return;
+        }
+
+        if (currentPiece == null) {
+            System.out.println("No current piece, spawning new one");
+            spawnNewPiece();
+            return;
+        }
+
+        // Try to move current piece down
+        boolean moved = this.gridManager.performMove(this.currentPiece, MovementType.DOWN);
+        
+        if (moved) {
+            // Piece moved down successfully
+            System.out.println("Piece moved down successfully");
+        } else {
+            // Piece cannot move down anymore - it has landed
+            System.out.println("Piece landed, fixing in place");
+            
+            // The piece is already in the grid, so we just need to:
+            // 1. Clear any full lines and track how many were cleared
+            // 2. Spawn a new piece
+            
+            lastLinesCleared = this.gridManager.clearFullLines();
+            spawnNewPiece();
+        }
+    }
+
+    /**
+     * Spawns a new piece at the top of the grid.
+     */
+    private void spawnNewPiece() {
+        // Use the pre-generated next piece, or create a new one
+        if (nextPiece == null) {
+            nextPiece = this.factory.createTetrisPiece(TetrisPieceType.randomPieceType());
+        }
+        
+        TetrisPiece newPiece = nextPiece;
+        nextPiece = this.factory.createTetrisPiece(TetrisPieceType.randomPieceType());
+        
+        // Try to add the new piece to the grid
+        if (this.gridManager.addPiece(newPiece)) {
+            this.currentPiece = newPiece;
+            System.out.println("New piece spawned successfully");
+        } else {
+            // Cannot add piece - game over
+            System.out.println("Cannot place new piece - GAME OVER");
+            gameOver();
+        }
+    }
+
+    @Override
+    public TetrisPiece getNextPiece() {
+        if (nextPiece == null) {
+            nextPiece = this.factory.createTetrisPiece(TetrisPieceType.randomPieceType());
+        }
+        return nextPiece;
+    }
+
+    @Override
+    public List<? extends Drawable> getGrid() {
+        return this.gridManager.getPieces();
+    }
+
+    @Override
+    public int[][] getCurrentGrid() {
+        return this.gridManager.getGridArray();
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Game stopped");
+        gameStarted = false;
+    }
+
+    @Override
+    public void pause() {
+        System.out.println("Game paused");
+        // Game loop handles pausing
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Game starting...");
+        gameOver = false;
+        gameStarted = true;
+        
+        // Clear the grid
+        this.gridManager.getPieces().clear();
+        
+        // Create first piece
+        this.currentPiece = null;
+        this.nextPiece = null;
+        spawnNewPiece();
+        
+        System.out.println("Game started with " + this.gridManager.getPieces().size() + " pieces");
+    }
+
+    /**
+     * Restarts the game completely.
+     */
+    public void restart() {
+        System.out.println("Game restarting...");
+        gameOver = false;
+        gameStarted = false;
+        
+        // Clear the grid completely
+        this.gridManager.getPieces().clear();
+        
+        // Reset pieces
+        this.currentPiece = null;
+        this.nextPiece = null;
+        
+        // Start the game
+        start();
+    }
+
+    private void gameOver() {
+        System.out.println("GAME OVER!");
+        gameOver = true;
+        gameStarted = false;
+    }
+
+    @Override
+    public void handle(KeyEvent keyEvent) {
+        if (!gameStarted || gameOver || currentPiece == null) {
+            System.out.println("Key event ignored - game not active or no current piece");
+            return;
+        }
+
+        System.out.println("Handling key: " + keyEvent.getCode());
+        
+        switch (keyEvent.getCode()) {
+            case UP -> {
+                if (this.gridManager.performMove(this.currentPiece, MovementType.ROTATE)) {
+                    System.out.println("Piece rotated");
+                }
+            }
+            case DOWN -> {
+                if (this.gridManager.performMove(this.currentPiece, MovementType.DOWN)) {
+                    System.out.println("Piece moved down (manual)");
+                }
+            }
+            case LEFT -> {
+                if (this.gridManager.performMove(this.currentPiece, MovementType.LEFT)) {
+                    System.out.println("Piece moved left");
+                }
+            }
+            case RIGHT -> {
+                if (this.gridManager.performMove(this.currentPiece, MovementType.RIGHT)) {
+                    System.out.println("Piece moved right");
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks if the game is over.
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    /**
+     * Checks if the game is started.
+     */
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    /**
+     * Gets and resets the number of lines cleared in the last update.
+     * This method should be called by the score system after each update.
+     */
+    public int getAndResetLinesCleared() {
+        int lines = lastLinesCleared;
+        lastLinesCleared = 0; // Reset after reading
+        return lines;
+    }
+}
