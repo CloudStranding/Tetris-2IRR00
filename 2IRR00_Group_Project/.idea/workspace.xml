@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f2b61fe5-42da-4d77-86b1-518f26dc4fd3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/EnhancedGameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/EnhancedGameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/game/TetrisGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/game/TetrisGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/DifficultyScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/DifficultyScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/GameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/GameOverOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/GameOverOverlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/InstructionScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/InstructionScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/MainMenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/MainMenuScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/PauseOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/PauseOverlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/TitleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/GUI/ui/TitleScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/TetrisGameMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/TetrisGameMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gameAnimation/GameLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gameAnimation/GameLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gameAnimation/TetrisGameIntegration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gameAnimation/TetrisGameIntegration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/grid/GridCollisionDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/grid/GridCollisionDetector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/grid/GridManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/grid/GridManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/scoresystem/ScoreManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/irr00_group_project/scoresystem/ScoreManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/grid/GridCollisionDetectorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/grid/GridCollisionDetectorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/grid/GridManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/grid/GridManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/piece/BlockTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/piece/BlockTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mycompany/irr00_group_project/gamelogic/piece/TetrisPieceTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2yM6mak55sFTzOqkBoTIk8XHDGA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.App.executor": "Run",
+    "Application.TetrisGameMain.executor": "Run",
+    "JUnit.BlockTest.executor": "Run",
+    "JUnit.GameControllerTest.executor": "Run",
+    "JUnit.GameLoopTest.executor": "Run",
+    "JUnit.GameRendererTest.executor": "Run",
+    "JUnit.GameTest.executor": "Run",
+    "JUnit.GameTimerTest.executor": "Run",
+    "JUnit.GridCollisionDetectorTest.executor": "Run",
+    "JUnit.GridManagerTest.executor": "Run",
+    "JUnit.ScoreManagerTest.executor": "Run",
+    "JUnit.TetrisGameIntegrationTest.executor": "Run",
+    "JUnit.TetrisPieceFactoryTest.executor": "Run",
+    "JUnit.TetrisPieceTest.executor": "Run",
+    "JUnit.TetrisPieceTypeTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f2b61fe5-42da-4d77-86b1-518f26dc4fd3" name="Changes" comment="" />
+      <created>1749632255919</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749632255919</updated>
+      <workItem from="1749632257412" duration="2645000" />
+      <workItem from="1749641848782" duration="3415000" />
+      <workItem from="1749666486147" duration="213000" />
+      <workItem from="1749666866302" duration="33000" />
+      <workItem from="1749667243794" duration="308000" />
+      <workItem from="1749667920897" duration="565000" />
+      <workItem from="1749669199285" duration="1568000" />
+      <workItem from="1749670878610" duration="586000" />
+      <workItem from="1749671555466" duration="965000" />
+      <workItem from="1749672548080" duration="6024000" />
+      <workItem from="1749679275848" duration="184000" />
+      <workItem from="1749679477993" duration="4263000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

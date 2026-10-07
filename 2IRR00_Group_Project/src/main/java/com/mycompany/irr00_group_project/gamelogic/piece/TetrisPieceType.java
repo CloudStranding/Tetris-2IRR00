@@ -1,30 +1,38 @@
 package com.mycompany.irr00_group_project.gamelogic.piece;
 
-import java.security.SecureRandom;
-import java.util.List;
 import java.util.Random;
 
 /**
- * Enums representing the different types of tetris pieces.
- * Has a method to get a random piece type.
- *
- * @author Jayson Leander, Yingyao Feng
+ * Enumeration of all possible tetris pieces types.
+ * Provides method to get a random piece type.
  */
 public enum TetrisPieceType {
-    O, S, L, J, T, I, Z, BOUNDARY;
+    I,
 
-    // Only include game pieces, not BOUNDARY
-    private static final List<TetrisPieceType> GAME_PIECES = List.of(O, S, L, J, T, I, Z);
-    private static final int GAME_PIECES_SIZE = GAME_PIECES.size();
-    private static final Random RANDOM = new SecureRandom();
+    L,
+
+    J,
+
+    T,
+
+    S,
+
+    Z,
+
+    O,
+
+    BOUNDARY;
+
+    private static final Random RANDOM = new Random();
+    private static final TetrisPieceType[] PLAYABLE_PIECES = {I, L, J, T, S, Z, O};
 
     /**
-     * Returns a random game piece type (excludes BOUNDARY).
+     * Returns a random tetris piece type.
+     * Excludes BOUNDARY type.
      *
-     * @return a random {@code TetrisPieceType} for gameplay
-     * @author Jayson Leander, Yingyao Feng
+     * @return random tetris piece type
      */
-    public static TetrisPieceType randomPieceType()  {
-        return GAME_PIECES.get(RANDOM.nextInt(GAME_PIECES_SIZE));
+    public static TetrisPieceType randomPieceType() {
+        return PLAYABLE_PIECES[RANDOM.nextInt(PLAYABLE_PIECES.length)];
     }
 }

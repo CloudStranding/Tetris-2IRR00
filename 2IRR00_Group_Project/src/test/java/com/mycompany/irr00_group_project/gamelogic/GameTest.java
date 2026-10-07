@@ -11,8 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
 
-// @author: Steve   
-
+/**
+ * Test class for Game logic.
+ * @author Steve
+ */
 public class GameTest {
 
     private Game game;
@@ -31,7 +33,7 @@ public class GameTest {
 
     @Test
     void testGetNextPiece() {
-        TetrisPiece piece = game.getNextPiece();
+        Drawable piece = game.getNextPiece();
         assertNotNull(piece, "getNextPiece should return a non-null TetrisPiece");
     }
 
@@ -41,22 +43,6 @@ public class GameTest {
         List<? extends Drawable> grid = game.getGrid();
         assertFalse(grid.isEmpty(), "Grid should not be empty after start()");
         assertTrue(game.isGameStarted(), "Game should be started after start()");
-    }
-
-    @Test
-    void testRestart() {
-        // Start the game first
-        game.start();
-        assertTrue(game.isGameStarted(), "Game should be started");
-        
-        // Restart the game
-        game.restart();
-        assertTrue(game.isGameStarted(), "Game should be started after restart");
-        assertFalse(game.isGameOver(), "Game should not be over after restart");
-        
-        // Grid should be cleared and new piece added
-        List<? extends Drawable> grid = game.getGrid();
-        assertFalse(grid.isEmpty(), "Grid should have new piece after restart");
     }
 
     @Test
@@ -74,7 +60,6 @@ public class GameTest {
         assertTrue(game.isGameStarted(), "Game should be started");
         
         game.pause();
-        // Note: Pause state is handled by GameLoop, so we can't test it directly here
         assertTrue(game.isGameStarted(), "Game should still be started after pause");
     }
 

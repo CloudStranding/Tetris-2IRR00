@@ -8,99 +8,92 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- * Object that represents a block.
- * A block has a position represented as a {@code Point}.
- * Can be drawn using a {@code GraphicContext} from a {@code Canvas}.
- * To this end it implements {@code Drawable} and contains a size and color.
- * Object can be deep cloned.
- *
- * @author Jayson Leander, Yingyao Feng
+ * Represents a {@code Drawable} tetris block.
+ * Has a position and can draw itself on the canvas at that position.
+ * Can be cloned.
  */
 public class Block implements Drawable, Cloneable {
 
     private Point pos;
-    private final int size;
+    private final int blockSize;
     private final Color color;
 
     /**
-     * Constructor.
+     * Creates a new Block.
      *
-     * @param pos position
-     * @param blockSize size of the block, used for drawing
-     * @param color color of the block, used for drawing
-     * @author Jayson Leander, Yingyao Feng
+     * @param pos       position of the block
+     * @param blockSize size of the block
+     * @param color     color of the block
      */
     public Block(Point pos, int blockSize, Color color) {
         this.pos = pos;
-        this.size = blockSize;
+        this.blockSize = blockSize;
         this.color = color;
     }
 
-    @Override
-    public void draw(GraphicsContext gc) {
-        double x = this.pos.getX() * this.size;
-        double y = this.pos.getY() * this.size;
-        
-        // Don't draw boundary blocks (they have BLACK color and negative positions)
-        // Don't draw blocks that are completely outside the visible area
-        if (this.color == Color.BLACK || this.pos.getY() < 0 || x < 0) {
-            return;
-        }
-        
-        // Fill the block with its color
-        gc.setFill(this.color);
-        gc.fillRect(x, y, this.size, this.size);
-        
-        // Add a darker border for better visibility
-        gc.setStroke(this.color.darker());
-        gc.setLineWidth(2);
-        gc.strokeRect(x, y, this.size, this.size);
-        
-        // Add a lighter inner border for 3D effect
-        gc.setStroke(this.color.brighter());
-        gc.setLineWidth(1);
-        gc.strokeRect(x + 1, y + 1, this.size - 2, this.size - 2);
+    /**
+     * Gets the position of the block.
+     *
+     * @return position
+     */
+    public Point getPos() {
+        return this.pos;
     }
 
     /**
      * Sets the position of the block.
      *
-     * @param pos position to set block to
-     * @author Jayson Leander, Yingyao Feng
+     * @param pos new position
      */
     public void setPos(Point pos) {
         this.pos = pos;
     }
 
     /**
-     * Returns the position of the block as a {@code Point}.
-     *
-     * @return position of the block
-     * @author Jayson Leander, Yingyao Feng
-     */
-    public Point getPos() {
-        return pos;
-    }
-
-    /**
-     * Returns the color of the block.
+     * Gets the color of the block.
      *
      * @return color of the block
      */
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
+    /**
+     * Draws the block on the given graphics context.
+     * Draws a filled rectangle with a black border at the block's position.
+     *
+     * @param gc The graphics context to draw on
+     */
     @Override
-    public String toString() {
-        return this.pos.toString();
+    public void draw(GraphicsContext gc) {
+        // Calculate position in pixels
+        double x = pos.x * blockSize;
+        double y = pos.y * blockSize;
+
+        // Set color
+        gc.setFill(color);
+
+        // Draw the block
+        gc.fillRect(x, y, blockSize, blockSize);
+
+        // Draw border
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(1);
+        gc.strokeRect(x, y, blockSize, blockSize);
     }
 
+    /**
+     * Creates a deep copy of this block.
+     * Creates a new Point object to avoid sharing references.
+     *
+     * @return A new Block with the same position, size, and color
+     */
     @Override
     public Block clone() {
         try {
             Block clone = (Block) super.clone();
-            clone.pos = (Point) this.pos.clone();
+            // Create new Point object to avoid sharing references
+            clone.pos = new Point(this.pos.x, this.pos.y);
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

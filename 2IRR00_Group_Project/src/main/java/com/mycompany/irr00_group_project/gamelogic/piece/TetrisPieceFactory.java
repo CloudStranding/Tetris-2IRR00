@@ -7,12 +7,9 @@ import java.util.List;
 import javafx.scene.paint.Color;
 
 /**
- * Factory to create tetris pieces based on {@code TetrisPieceType}.
- * Needs {@code gridWidth, gridHeight, blockSize} to calculate some pieces positions.
- * When a piece is created it will have a position in the middle of the grid.
- * Also assigns a color and size to the pieces.
- *
- * @author Jayson Leander, Yingyao Feng
+ * Factory for creating tetris pieces of different types.
+ * Creates pieces with blocks positioned according to the standard Tetris piece patterns.
+ * Also creates boundary pieces for grid boundaries.
  */
 public class TetrisPieceFactory {
 
@@ -21,138 +18,191 @@ public class TetrisPieceFactory {
     private final int blockSize;
 
     /**
-     * Constructor.
+     * Creates a new TetrisPieceFactory.
      *
-     * @param gridWidth width of grid
-     * @param gridHeight height of grid
-     * @param blockSize size of individual blocks that form a piece
-     * @author Jayson Leander, Yingyao Feng
+     * @param gridWidth  width of the grid
+     * @param gridHeight height of the grid
+     * @param blockSize  size of individual blocks
      */
     public TetrisPieceFactory(int gridWidth, int gridHeight, int blockSize) {
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
         this.blockSize = blockSize;
-        System.out.println("TetrisPieceFactory created with blockSize: " + blockSize);
     }
 
     /**
-     * Creates a tetris piece based on passed type.
-     * Piece will have a position in the middle of the grid.
+     * Creates a tetris piece of the specified type.
      *
-     * @param type type of piece to create
-     * @return a tetris piece, with a position in the middle of the grid, based on passed type
-     * @author Jayson Leander, Yingyao Feng
+     * @param type the type of piece to create
+     * @return a new tetris piece
      */
     public TetrisPiece createTetrisPiece(TetrisPieceType type) {
-        // Create a new blocks list for each piece - this fixes the bug!
+        return switch (type) {
+            case I -> createIPiece();
+            case L -> createLPiece();
+            case J -> createJPiece();
+            case T -> createTPiece();
+            case S -> createSPiece();
+            case Z -> createZPiece();
+            case O -> createOPiece();
+            case BOUNDARY -> createBoundaryPiece();
+        };
+    }
+
+    /**
+     * Creates an I-shaped piece.
+     *
+     * @return a new I-shaped piece
+     */
+    private TetrisPiece createIPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 2;
+        int startY = 0; // Changed from -1 to 0 to make piece fully visible
+
+        for (int i = 0; i < 4; i++) {
+            blocks.add(new Block(new Point(startX + i, startY), blockSize, Color.CYAN));
+        }
+
+        return new TetrisPiece(blocks, TetrisPieceType.I);
+    }
+
+    /**
+     * Creates an L-shaped piece.
+     *
+     * @return a new L-shaped piece
+     */
+    private TetrisPiece createLPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 1;
+        int startY = 0; // Changed to 0 so all blocks are fully visible
+
+        // L shape: three blocks horizontally, one block up and to the right
+        blocks.add(new Block(new Point(startX, startY + 1), blockSize, Color.ORANGE));     // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY + 1), blockSize, Color.ORANGE)); // Y = 1
+        blocks.add(new Block(new Point(startX + 2, startY + 1), blockSize, Color.ORANGE)); // Y = 1
+        blocks.add(new Block(new Point(startX + 2, startY), blockSize, Color.ORANGE));     // Y = 0
+
+        return new TetrisPiece(blocks, TetrisPieceType.L);
+    }
+
+    /**
+     * Creates a J-shaped piece.
+     *
+     * @return a new J-shaped piece
+     */
+    private TetrisPiece createJPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 1;
+        int startY = 0; // Changed to 0 so all blocks are fully visible
+
+        // J shape: three blocks horizontally, one block up and to the left
+        blocks.add(new Block(new Point(startX, startY + 1), blockSize, Color.BLUE));     // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY + 1), blockSize, Color.BLUE)); // Y = 1
+        blocks.add(new Block(new Point(startX + 2, startY + 1), blockSize, Color.BLUE)); // Y = 1
+        blocks.add(new Block(new Point(startX, startY), blockSize, Color.BLUE));         // Y = 0
+
+        return new TetrisPiece(blocks, TetrisPieceType.J);
+    }
+
+    /**
+     * Creates a T-shaped piece.
+     *
+     * @return a new T-shaped piece
+     */
+    private TetrisPiece createTPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 1;
+        int startY = 0; // Changed to 0 so all blocks are fully visible
+
+        // T shape: three blocks horizontally, one block up and in the middle
+        blocks.add(new Block(new Point(startX, startY + 1), blockSize, Color.PURPLE));     // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY + 1), blockSize, Color.PURPLE)); // Y = 1
+        blocks.add(new Block(new Point(startX + 2, startY + 1), blockSize, Color.PURPLE)); // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY), blockSize, Color.PURPLE));     // Y = 0
+
+        return new TetrisPiece(blocks, TetrisPieceType.T);
+    }
+
+    /**
+     * Creates an S-shaped piece.
+     *
+     * @return a new S-shaped piece
+     */
+    private TetrisPiece createSPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 1;
+        int startY = 0; // Changed to 0 so all blocks are fully visible
+
+        // S shape: zigzag going up and to the right
+        blocks.add(new Block(new Point(startX, startY + 1), blockSize, Color.GREEN));     // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY + 1), blockSize, Color.GREEN)); // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY), blockSize, Color.GREEN));     // Y = 0
+        blocks.add(new Block(new Point(startX + 2, startY), blockSize, Color.GREEN));     // Y = 0
+
+        return new TetrisPiece(blocks, TetrisPieceType.S);
+    }
+
+    /**
+     * Creates a Z-shaped piece.
+     *
+     * @return a new Z-shaped piece
+     */
+    private TetrisPiece createZPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 1;
+        int startY = 0; // Changed to 0 so all blocks are fully visible
+
+        // Z shape: zigzag going up and to the left
+        blocks.add(new Block(new Point(startX, startY), blockSize, Color.RED));         // Y = 0
+        blocks.add(new Block(new Point(startX + 1, startY), blockSize, Color.RED));     // Y = 0
+        blocks.add(new Block(new Point(startX + 1, startY + 1), blockSize, Color.RED)); // Y = 1
+        blocks.add(new Block(new Point(startX + 2, startY + 1), blockSize, Color.RED)); // Y = 1
+
+        return new TetrisPiece(blocks, TetrisPieceType.Z);
+    }
+
+    /**
+     * Creates an O-shaped piece.
+     *
+     * @return a new O-shaped piece
+     */
+    private TetrisPiece createOPiece() {
+        List<Block> blocks = new ArrayList<>();
+        int startX = gridWidth / 2 - 1;
+        int startY = 0; // Changed to 0 so all blocks are fully visible
+
+        // O shape: 2x2 square
+        blocks.add(new Block(new Point(startX, startY), blockSize, Color.YELLOW));         // Y = 0
+        blocks.add(new Block(new Point(startX + 1, startY), blockSize, Color.YELLOW));     // Y = 0
+        blocks.add(new Block(new Point(startX, startY + 1), blockSize, Color.YELLOW));     // Y = 1
+        blocks.add(new Block(new Point(startX + 1, startY + 1), blockSize, Color.YELLOW)); // Y = 1
+
+        return new TetrisPiece(blocks, TetrisPieceType.O);
+    }
+
+    /**
+     * Creates a boundary piece.
+     *
+     * @return a new boundary piece
+     */
+    private TetrisPiece createBoundaryPiece() {
         List<Block> blocks = new ArrayList<>();
 
-        TetrisPiece piece = switch (type) {
-            case I -> createIPiece(Color.CYAN, blocks);
-            case Z -> createZPiece(Color.RED, blocks);
-            case L -> createLPiece(Color.ORANGE, blocks);
-            case J -> createJPiece(Color.BLUE, blocks);
-            case O -> createOPiece(Color.YELLOW, blocks);
-            case S -> createSPiece(Color.GREEN, blocks);
-            case T -> createTPiece(Color.PURPLE, blocks);
-            case BOUNDARY -> createBoundaryPiece(Color.BLACK, blocks);
-        };
-        
-        // Basic validation - only log errors
-        if (type != TetrisPieceType.BOUNDARY && piece.getBlocks().size() != 4) {
-            System.err.println("ERROR: " + type + " piece has " + piece.getBlocks().size() + 
-                             " blocks instead of 4!");
+        // Left wall
+        for (int y = -4; y < gridHeight + 4; y++) {
+            blocks.add(new Block(new Point(-1, y), blockSize, Color.BLACK));
         }
-        
-        return piece;
-    }
 
-    private TetrisPiece createBoundaryPiece(Color color, List<Block> blocks) {
-        for (int y = 0; y < this.gridHeight; y++) {
-            blocks.add(new Block(new Point(-1, y), this.blockSize, color));
-            blocks.add(new Block(new Point(this.gridWidth, y), this.blockSize, color));
+        // Right wall
+        for (int y = -4; y < gridHeight + 4; y++) {
+            blocks.add(new Block(new Point(gridWidth, y), blockSize, Color.BLACK));
         }
-        for (int x = -1; x <= this.gridWidth; x++) {
-            blocks.add(new Block(new Point(x, this.gridHeight), this.blockSize, color));
+
+        // Bottom wall
+        for (int x = -1; x <= gridWidth; x++) {
+            blocks.add(new Block(new Point(x, gridHeight), blockSize, Color.BLACK));
         }
-        
-        return new TetrisPiece(blocks);
-    }
 
-    private TetrisPiece createIPiece(Color color, List<Block> blocks) {
-        // I piece: 4 blocks in a row, all at y=0 for full visibility
-        int startX = Math.max(0, (gridWidth - 4) / 2);
-        
-        for (int i = 0; i < 4; i++) {
-            Point pos = new Point(startX + i, 0);
-            blocks.add(new Block(pos, this.blockSize, color));
-        }
-        return new TetrisPiece(blocks);
-    }
-
-    private TetrisPiece createZPiece(Color color, List<Block> blocks) {
-        // Z piece: start from y=0 to show full shape immediately
-        int centerX = Math.max(1, Math.min(gridWidth - 2, gridWidth / 2));
-        
-        blocks.add(new Block(new Point(centerX - 1, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX + 1, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
-    }
-
-    private TetrisPiece createOPiece(Color color, List<Block> blocks) {
-        // O piece: 2x2 square, start from y=0
-        int centerX = Math.max(1, Math.min(gridWidth - 2, gridWidth / 2));
-        
-        blocks.add(new Block(new Point(centerX - 1, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX - 1, 1), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
-    }
-
-    private TetrisPiece createSPiece(Color color, List<Block> blocks) {
-        // S piece: start from y=0
-        int centerX = Math.max(1, Math.min(gridWidth - 2, gridWidth / 2));
-        
-        blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX + 1, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX - 1, 1), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
-    }
-
-    private TetrisPiece createLPiece(Color color, List<Block> blocks) {
-        // L piece: start from y=0 to show full shape
-        int centerX = Math.max(1, Math.min(gridWidth - 2, gridWidth / 2));
-        
-        blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 2), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX + 1, 2), this.blockSize, color));
-        return new TetrisPiece(blocks);
-    }
-
-    private TetrisPiece createJPiece(Color color, List<Block> blocks) {
-        // J piece: start from y=0 to show full shape
-        int centerX = Math.max(1, Math.min(gridWidth - 2, gridWidth / 2));
-        
-        blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 2), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX - 1, 2), this.blockSize, color));
-        return new TetrisPiece(blocks);
-    }
-
-    private TetrisPiece createTPiece(Color color, List<Block> blocks) {
-        // T piece: start from y=0 for full visibility
-        int centerX = Math.max(1, Math.min(gridWidth - 2, gridWidth / 2));
-        
-        blocks.add(new Block(new Point(centerX - 1, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX + 1, 0), this.blockSize, color));
-        blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.BOUNDARY);
     }
 }
