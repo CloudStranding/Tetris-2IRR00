@@ -78,34 +78,32 @@ public class TetrisPieceFactoryTest {
 
     @Test
     void testRandomPieceGeneration() {
-        // Generate multiple random pieces and verify they are valid
-        Set<Integer> blockCounts = new HashSet<>();
-        
+        Set<TetrisPieceType> generatedTypes = new HashSet<>();
+
         for (int i = 0; i < 100; i++) {
-            TetrisPiece piece = factory.createTetrisPiece(TetrisPieceType.randomPieceType());
+            TetrisPieceType type = TetrisPieceType.randomPieceType();
+            TetrisPiece piece = factory.createTetrisPiece(type);
+
             assertNotNull(piece, "Random piece should not be null");
             List<Block> blocks = piece.getBlocks();
             assertFalse(blocks.isEmpty(), "Random piece should have blocks");
-            
-            // Track unique block counts (different piece types have different numbers of blocks)
-            blockCounts.add(blocks.size());
-            
-            // Verify piece is within grid bounds
+
+            generatedTypes.add(type);
+
             for (Block block : blocks) {
                 Point pos = block.getPos();
                 assertTrue(pos.x >= 0 && pos.x < 10, "Block should be within grid width");
                 assertTrue(pos.y >= 0, "Block should be above or at grid top");
             }
-            
-            // Verify color consistency
+
             Color firstColor = blocks.get(0).getColor();
             for (Block block : blocks) {
                 assertEquals(firstColor, block.getColor(), "All blocks should have the same color");
             }
         }
-        
-        // Verify we get pieces with different block counts (indicating different piece types)
-        assertTrue(blockCounts.size() >= 2, "Should generate pieces with different block counts");
+
+        // Verify that we generated multiple distinct piece types
+        assertTrue(generatedTypes.size() >= 5, "Should generate at least 5 distinct piece types");
     }
 
     @Test

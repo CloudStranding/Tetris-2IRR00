@@ -24,15 +24,29 @@ import java.util.stream.Collectors;
 public class TetrisPiece implements Drawable, Cloneable {
 
     private List<Block> blocks;
+    private TetrisPieceType type;
 
     /**
      * Constructor.
+     * Type of piece will be {@code null}.
      *
      * @param blocks list of blocks
      * @author Jayson Leander, Yingyao Feng
      */
     public TetrisPiece(List<Block> blocks) {
+        this(blocks, null);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param blocks list of blocks
+     * @param type piece type
+     * @author Jayson Leander, Yingyao Feng
+     */
+    public TetrisPiece(List<Block> blocks, TetrisPieceType type) {
         this.blocks = blocks;
+        this.type = type;
     }
 
     /**
@@ -48,11 +62,17 @@ public class TetrisPiece implements Drawable, Cloneable {
     /**
      * Performs a move to this piece.
      * Move is determined by {@code MovementType}.
+     * Rotations do not apply to pieces with {@code TetrisPieceType.O}.
+     * All moves do not apply to {@code TetrisPieceType.BOUNDARY}.
      *
      * @param move type of move
      * @author Jayson Leander, Yingyao Feng
      */
     public void performMove(MovementType move) {
+        if (TetrisPieceType.BOUNDARY.equals(this.type)) {
+            return;
+        }
+
         switch (move) {
             case ROTATE -> rotate();
             case RIGHT -> moveRight();
@@ -94,6 +114,10 @@ public class TetrisPiece implements Drawable, Cloneable {
     }
 
     private void rotate() {
+        if (TetrisPieceType.O.equals(this.type)) {
+            return;
+        }
+
         Point origin = blocks.getFirst().getPos();
 
         for (Block block : this.blocks) {

@@ -1,11 +1,9 @@
 package com.mycompany.irr00_group_project.gamelogic.grid;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.mycompany.irr00_group_project.gamelogic.MovementType;
 import com.mycompany.irr00_group_project.gamelogic.piece.Block;
@@ -25,7 +23,7 @@ import com.mycompany.irr00_group_project.gamelogic.piece.TetrisPiece;
  */
 public class GridManager {
 
-    private final List<TetrisPiece> pieces;
+    private List<TetrisPiece> pieces;
     private final TetrisPiece boundary;
     private final GridCollisionDetector collisionDetector;
     private final int gridWidth;
@@ -35,8 +33,8 @@ public class GridManager {
     /**
      * Constructor.
      *
-     * @param boundary tetris piece representing boundary of the grid
-     * @param gridWidth width of the grid
+     * @param boundary   tetris piece representing boundary of the grid
+     * @param gridWidth  width of the grid
      * @param gridHeight height of the grid
      * @author Jayson Leander, Yingyao Feng
      */
@@ -110,7 +108,7 @@ public class GridManager {
      * Will only do so if it doesn't cause a collision.
      *
      * @param piece piece to move
-     * @param move movement type
+     * @param move  movement type
      * @return true if piece has been moved and false otherwise
      * @author Jayson Leander, Yingyao Feng
      */
@@ -128,54 +126,114 @@ public class GridManager {
     /**
      * Clears full lines on the grid.
      * Moves pieces down when necessary if line gets cleared.
+     * Clearing lines is done using the <a href="https://harddrop.com/wiki/Line_clear">Sticky</a> method.
      *
      * @return the number of lines cleared
      * @author Jayson Leander, Yingyao Feng
      */
     public int clearFullLines() {
-        Map<Integer, List<Block>> blocksByRow = new HashMap<>();
+        int linesCleared = 0;
 
-        for (TetrisPiece piece : pieces) {
-            for (Block block : piece.getBlocks()) {
-                int y = block.getPos().y;
-                blocksByRow.computeIfAbsent(y, k -> new ArrayList<>()).add(block);
-            }
-        }
+        while (true) {
+            Map<Integer, List<Block>> blocksByRow = new HashMap<>();
 
-        List<Integer> fullRows = blocksByRow.entrySet().stream()
-                .filter(entry -> entry.getValue().size() == gridWidth)
-                .map(Map.Entry::getKey)
-                .sorted() // TODO maybe change for performance
-                .toList();
-
-        if (fullRows.isEmpty()) {
-            return 0; // No lines cleared
-        }
-
-        int linesCleared = fullRows.size();
-        System.out.println("Clearing " + linesCleared + " full lines: " + fullRows);
-
-        for (TetrisPiece piece : pieces) {
-            piece.getBlocks().removeIf(block -> fullRows.contains(block.getPos().y));
-        }
-
-        for (int clearedY : fullRows) {
             for (TetrisPiece piece : pieces) {
                 for (Block block : piece.getBlocks()) {
-                    if (block.getPos().y < clearedY) {
-                        Point oldPos = block.getPos();
-
-                        block.setPos(new Point(oldPos.x, oldPos.y + 1));
-                    }
+                    int y = block.getPos().y;
+                    blocksByRow.computeIfAbsent(y, k -> new ArrayList<>()).add(block);
                 }
+            }
+
+            List<Block> rowToClear = IntStream.range(0, this.gridHeight)
+                    .mapToObj(blocksByRow::get)
+                    .filter(row -> row != null && row.size() == this.gridWidth)
+                    .findFirst()
+                    .orElse(null);
+
+            if (rowToClear == null) {
+                break;
+            }
+
+            for (TetrisPiece piece : pieces) {
+                piece.getBlocks().removeIf(rowToClear::contains);
+            }
+
+            linesCleared++;
+
+            List<Block> remaining = pieces.stream()
+                    .flatMap(p -> p.getBlocks().stream())
+                    .toList();
+
+            List<Block> visited = new ArrayList<>();
+            List<List<Block>> floatingGroups = new ArrayList<>();
+
+            for (Block block : remaining) {
+                if (!visited.contains(block)) {
+                    List<Block> group = new ArrayList<>();
+                    floodFill(block, remaining, group);
+                    visited.addAll(group);
+                    floatingGroups.add(group);
+                }
+            }
+
+            for (List<Block> group : floatingGroups) {
+                moveGroupDown(group, remaining);
             }
         }
 
         fullGridRebuild();
-        
         System.out.println("Successfully cleared " + linesCleared + " lines");
         return linesCleared;
     }
+
+    private void floodFill(Block start, List<Block> all, List<Block> group) {
+        Queue<Block> queue = new ArrayDeque<>();
+        queue.add(start);
+        group.add(start);
+
+        while (!queue.isEmpty()) {
+            Block curr = queue.poll();
+            Point pos = curr.getPos();
+
+            for (Point offset : List.of(
+                    new Point(0, -1),
+                    new Point(0, 1),
+                    new Point(-1, 0),
+                    new Point(1, 0))) {
+
+                Point neighborPos = new Point(pos.x + offset.x, pos.y + offset.y);
+                for (Block b : all) {
+                    if (!group.contains(b) && b.getPos().equals(neighborPos)) {
+                        group.add(b);
+                        queue.add(b);
+                    }
+                }
+            }
+        }
+    }
+
+    private void moveGroupDown(List<Block> group, List<Block> all) {
+        List<Block> others = all.stream()
+                .filter(b -> !group.contains(b))
+                .toList();
+
+        TetrisPiece otherPiece = new TetrisPiece(others);
+        TetrisPiece groupPiece = new TetrisPiece(group);
+        TetrisPiece cloneGroupPiece = groupPiece.clone();
+
+        //TODO maybe use grid collision detector for this
+
+        while (true) {
+            cloneGroupPiece.performMove(MovementType.DOWN);
+
+            if (otherPiece.intersects(cloneGroupPiece) || this.boundary.intersects(cloneGroupPiece)) {
+                break;
+            }
+
+            groupPiece.performMove(MovementType.DOWN);
+        }
+    }
+
 
     /**
      * Getter for list of pieces representing the grid.
@@ -185,5 +243,16 @@ public class GridManager {
      */
     public List<TetrisPiece> getPieces() {
         return this.pieces;
+    }
+
+    /**
+     * Sets the pieces in the grid.
+     *
+     * @param pieces pieces to set the grid to
+     * @author Jayson Leander, Yingyao Feng
+     */
+    protected void setPieces(List<TetrisPiece> pieces) {
+        this.pieces = pieces;
+        fullGridRebuild();
     }
 }

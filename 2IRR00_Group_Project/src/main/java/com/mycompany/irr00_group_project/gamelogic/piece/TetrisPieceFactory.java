@@ -76,7 +76,7 @@ public class TetrisPieceFactory {
             blocks.add(new Block(new Point(x, this.gridHeight), this.blockSize, color));
         }
         
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.BOUNDARY);
     }
 
     private TetrisPiece createIPiece(Color color, List<Block> blocks) {
@@ -84,10 +84,10 @@ public class TetrisPieceFactory {
         int startX = Math.max(0, (gridWidth - 4) / 2);
         
         for (int i = 0; i < 4; i++) {
-            Point pos = new Point(startX + i, 0);
+            Point pos = new Point(startX, i);
             blocks.add(new Block(pos, this.blockSize, color));
         }
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.I);
     }
 
     private TetrisPiece createZPiece(Color color, List<Block> blocks) {
@@ -98,7 +98,7 @@ public class TetrisPieceFactory {
         blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
         blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
         blocks.add(new Block(new Point(centerX + 1, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.Z);
     }
 
     private TetrisPiece createOPiece(Color color, List<Block> blocks) {
@@ -109,7 +109,7 @@ public class TetrisPieceFactory {
         blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
         blocks.add(new Block(new Point(centerX - 1, 1), this.blockSize, color));
         blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.O);
     }
 
     private TetrisPiece createSPiece(Color color, List<Block> blocks) {
@@ -120,7 +120,7 @@ public class TetrisPieceFactory {
         blocks.add(new Block(new Point(centerX + 1, 0), this.blockSize, color));
         blocks.add(new Block(new Point(centerX - 1, 1), this.blockSize, color));
         blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.S);
     }
 
     private TetrisPiece createLPiece(Color color, List<Block> blocks) {
@@ -131,7 +131,7 @@ public class TetrisPieceFactory {
         blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
         blocks.add(new Block(new Point(centerX, 2), this.blockSize, color));
         blocks.add(new Block(new Point(centerX + 1, 2), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.L);
     }
 
     private TetrisPiece createJPiece(Color color, List<Block> blocks) {
@@ -142,7 +142,7 @@ public class TetrisPieceFactory {
         blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
         blocks.add(new Block(new Point(centerX, 2), this.blockSize, color));
         blocks.add(new Block(new Point(centerX - 1, 2), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.J);
     }
 
     private TetrisPiece createTPiece(Color color, List<Block> blocks) {
@@ -153,6 +153,6 @@ public class TetrisPieceFactory {
         blocks.add(new Block(new Point(centerX, 0), this.blockSize, color));
         blocks.add(new Block(new Point(centerX + 1, 0), this.blockSize, color));
         blocks.add(new Block(new Point(centerX, 1), this.blockSize, color));
-        return new TetrisPiece(blocks);
+        return new TetrisPiece(blocks, TetrisPieceType.T);
     }
 }
