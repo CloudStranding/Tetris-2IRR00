@@ -1,0 +1,4 @@
+raye2:500
+raye:80
+raye3:40
+rayewantstogobed:40

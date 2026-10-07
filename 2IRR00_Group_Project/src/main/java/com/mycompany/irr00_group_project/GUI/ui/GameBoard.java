@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.ui;
+package com.mycompany.irr00_group_project.GUI.ui;
 
 import com.mycompany.irr00_group_project.game.TetrisGame;
 
@@ -109,7 +109,6 @@ public class GameBoard {
 
         HBox controlButtons = new HBox(10, pauseBtn, restartBtn);
         controlButtons.setAlignment(Pos.CENTER);
-
         sidebar.getChildren().addAll(scoreLabel, nextLabel, nextPreview, controlsLabel, controlButtons);
         return sidebar;
     }

@@ -16,7 +16,8 @@ public class PauseOverlay extends VBox {
     
     private final Button resumeButton;
     private final Button restartButton;
-    
+    private final Button scoreboardButton;
+
     public PauseOverlay() {
         super(35);
         setAlignment(Pos.CENTER);
@@ -26,15 +27,15 @@ public class PauseOverlay extends VBox {
                 "-fx-border-width: 3;" +
                 "-fx-border-radius: 20;" +
                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 20, 0.8, 0, 10);");
-        setPrefSize(400, 300);
-        setMaxSize(400, 300);
+        setPrefSize(400, 600);
+        setMaxSize(400, 600);
         
         Label pauseTitle = new Label("GAME PAUSED");
         pauseTitle.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 26));
         pauseTitle.setTextFill(Color.WHITE);
         pauseTitle.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
                           "-fx-background-radius: 12;" +
-                          "-fx-border-color: #FFD700;" +
+                          "-fx-border-color:rgb(247, 246, 241);" +
                           "-fx-border-width: 3;" +
                           "-fx-border-radius: 12;" +
                           "-fx-padding: 15;" +
@@ -42,8 +43,9 @@ public class PauseOverlay extends VBox {
         
         resumeButton = createPauseButton("RESUME", Color.LIMEGREEN);
         restartButton = createPauseButton("RESTART", Color.CRIMSON);
-        
-        getChildren().addAll(pauseTitle, resumeButton, restartButton);
+        scoreboardButton = createPauseButton("SCOREBOARD", Color.DEEPSKYBLUE);
+
+        getChildren().addAll(pauseTitle, resumeButton, restartButton, scoreboardButton);
     }
     
     private Button createPauseButton(String text, Color color) {
@@ -113,4 +115,5 @@ public class PauseOverlay extends VBox {
     // Getters
     public Button getResumeButton() { return resumeButton; }
     public Button getRestartButton() { return restartButton; }
+    public Button getScoreboardButton() { return scoreboardButton; }
 } 

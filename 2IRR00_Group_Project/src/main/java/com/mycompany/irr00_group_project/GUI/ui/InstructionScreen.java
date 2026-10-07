@@ -32,9 +32,9 @@ public class InstructionScreen {
         Label title = new Label("How to Play");
         title.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 32));
         title.setTextFill(Color.WHITE);
-        title.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        title.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(54, 102, 152));" +
                       "-fx-background-radius: 15;" +
-                      "-fx-border-color: #FFD700;" +
+                      "-fx-border-color:rgb(240, 240, 238);" +
                       "-fx-border-width: 3;" +
                       "-fx-border-radius: 15;" +
                       "-fx-padding: 18;" +
@@ -70,7 +70,7 @@ public class InstructionScreen {
             if (text.equals("Scoring System:")) {
                 instructionLabel.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 18));
                 instructionLabel.setTextFill(Color.LIGHTGREEN);
-                instructionLabel.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,255,0,0.5), 5, 0.5, 0, 0);");
+                instructionLabel.setStyle("-fx-effect: dropshadow(gaussian, rgba(27, 223, 138, 0.5), 5, 0.5, 0, 0);");
             } else if (text.startsWith("•")) {
                 instructionLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
                 instructionLabel.setTextFill(Color.YELLOW);

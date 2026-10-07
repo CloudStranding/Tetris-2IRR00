@@ -45,15 +45,15 @@ public class TitleScreen {
     private Button createStartButton() {
         Button button = new Button("Start Game");
         button.setFont(Font.font(20));
-        button.setStyle("-fx-background-radius: 10; -fx-background-color: #2ecc71; -fx-text-fill: white;"
+        button.setStyle("-fx-background-radius: 10; -fx-background-color:rgb(19, 71, 55); -fx-text-fill: white;"
                       + "-fx-padding: 10 20 10 20; -fx-cursor: hand;"
                       + "-fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.4), 5, 0, 2, 2);");
         
-        button.setOnMouseEntered(e -> button.setStyle("-fx-background-radius: 10; -fx-background-color: #27ae60; -fx-text-fill: white;"
+        button.setOnMouseEntered(e -> button.setStyle("-fx-background-radius: 10; -fx-background-color:rgb(21, 84, 68); -fx-text-fill: white;"
                       + "-fx-padding: 10 20 10 20; -fx-cursor: hand;"
                       + "-fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.4), 5, 0, 2, 2);"));
         
-        button.setOnMouseExited(e -> button.setStyle("-fx-background-radius: 10; -fx-background-color: #2ecc71; -fx-text-fill: white;"
+        button.setOnMouseExited(e -> button.setStyle("-fx-background-radius: 10; -fx-background-color:rgb(21, 87, 73); -fx-text-fill: white;"
                       + "-fx-padding: 10 20 10 20; -fx-cursor: hand;"
                       + "-fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.4), 5, 0, 2, 2);"));
         

@@ -9,6 +9,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import com.mycompany.irr00_group_project.scoresystem.ScoreManager;
+import com.mycompany.irr00_group_project.GUI.ui.ScoreBoard;
 
 /**
  * Main menu screen for the Tetris game.
@@ -22,22 +24,22 @@ public class MainMenuScreen {
     private final Button difficultyButton;
     private final Button instructionButton;
     private final Label difficultyLabel;
-    
+    private final Button scoreboardButton;
     private int selectedDifficulty = 1;
     
     public MainMenuScreen() {
         menuRoot = new VBox(50);
         menuRoot.setAlignment(Pos.CENTER);
         menuRoot.setPadding(new Insets(80));
-        menuRoot.setStyle("-fx-background-color: linear-gradient(to bottom, #0f3460, #16537e, #0f3460);");
+        menuRoot.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(116, 144, 177),rgb(46, 118, 170),rgb(53, 104, 167));");
         
         // Create title with enhanced styling
         Label titleLabel = new Label("TETRIS");
-        titleLabel.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 85));
+        titleLabel.setFont(Font.font("Trebuchet MS", FontWeight.EXTRA_BOLD, 85));
         titleLabel.setTextFill(Color.WHITE);
-        titleLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        titleLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(44, 80, 119));" +
                           "-fx-background-radius: 20;" +
-                          "-fx-border-color: #FFD700;" +
+                          "-fx-border-color:rgb(19, 19, 17);" +
                           "-fx-border-width: 4;" +
                           "-fx-border-radius: 20;" +
                           "-fx-padding: 25;" +
@@ -47,6 +49,12 @@ public class MainMenuScreen {
         startGameButton = createMenuButton("START GAME", Color.LIMEGREEN);
         difficultyButton = createMenuButton("DIFFICULTY", Color.ORANGE);
         instructionButton = createMenuButton("INSTRUCTION", Color.DEEPSKYBLUE);
+        scoreboardButton = createMenuButton("SCOREBOARD", Color.MEDIUMSLATEBLUE);
+        scoreboardButton.setOnAction(e -> {
+            ScoreBoard board = new ScoreBoard(new ScoreManager());
+            board.show();
+        });
+
         
         // Create difficulty indicator with better styling
         difficultyLabel = new Label("Current Difficulty: " + getDifficultyName(selectedDifficulty));
@@ -59,7 +67,7 @@ public class MainMenuScreen {
         // Layout components with better spacing
         VBox buttonContainer = new VBox(25);
         buttonContainer.setAlignment(Pos.CENTER);
-        buttonContainer.getChildren().addAll(startGameButton, difficultyButton, instructionButton);
+        buttonContainer.getChildren().addAll(startGameButton, difficultyButton, instructionButton,scoreboardButton);
         
         menuRoot.getChildren().addAll(titleLabel, buttonContainer, difficultyLabel);
         
@@ -144,5 +152,6 @@ public class MainMenuScreen {
     public Button getStartGameButton() { return startGameButton; }
     public Button getDifficultyButton() { return difficultyButton; }
     public Button getInstructionButton() { return instructionButton; }
+    public Button getScoreboardButton() { return scoreboardButton; }
     public int getSelectedDifficulty() { return selectedDifficulty; }
 } 
