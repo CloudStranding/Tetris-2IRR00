@@ -1,19 +1,12 @@
 package com.mycompany.irr00_group_project.gamelogic.piece;
 
-import java.awt.Point;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
-
 import com.mycompany.irr00_group_project.gamelogic.MovementType;
-
+import org.junit.jupiter.api.Test;
+import java.awt.*;
+import java.util.List;
 import javafx.scene.paint.Color;
 
-// @author: Steve
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TetrisPieceTest {
 

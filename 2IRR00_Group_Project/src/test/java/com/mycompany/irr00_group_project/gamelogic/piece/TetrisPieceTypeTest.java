@@ -1,11 +1,7 @@
 package com.mycompany.irr00_group_project.gamelogic.piece;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-
-// @author: Steve   
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TetrisPieceTypeTest {
 
