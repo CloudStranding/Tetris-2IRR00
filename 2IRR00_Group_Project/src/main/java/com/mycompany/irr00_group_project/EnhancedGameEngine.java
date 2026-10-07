@@ -20,6 +20,7 @@ public class EnhancedGameEngine implements GameEngine {
     private final ScoreManager scoreManager;
     private int previousScore;
     private int previousPieceCount;
+    private String currentUsername;
     
     public EnhancedGameEngine(int gridWidth, int gridHeight, int blockSize) {
         this.game = new Game(gridWidth, gridHeight, blockSize);
@@ -141,4 +142,22 @@ public class EnhancedGameEngine implements GameEngine {
     public boolean isGameStarted() {
         return game.isGameStarted();
     }
-} 
+
+    /**
+     * Sets the username for the current game.
+     *
+     * @param username username
+     */
+    public void setCurrentUsername(String username) {
+        this.currentUsername = username;
+    }
+
+    /**
+     * Get the username for the current game.
+     *
+     * @return username
+     */
+    public String getCurrentUsername() {
+        return currentUsername;
+    }
+}
