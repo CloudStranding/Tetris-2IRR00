@@ -34,7 +34,7 @@ public class PauseOverlay extends VBox {
         pauseTitle.setTextFill(Color.WHITE);
         pauseTitle.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
                           "-fx-background-radius: 12;" +
-                          "-fx-border-color: #FFD700;" +
+                          "-fx-border-color:rgb(247, 246, 241);" +
                           "-fx-border-width: 3;" +
                           "-fx-border-radius: 12;" +
                           "-fx-padding: 15;" +

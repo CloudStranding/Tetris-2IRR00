@@ -35,7 +35,7 @@ public class DifficultyScreen {
         VBox difficultyBox = new VBox(25);
         difficultyBox.setAlignment(Pos.CENTER);
         difficultyBox.setPadding(new Insets(40));
-        difficultyBox.setStyle("-fx-background-color: rgba(15, 52, 96, 0.95);" +
+        difficultyBox.setStyle("-fx-background-color: rgba(49, 85, 128, 0.95);" +
                               "-fx-background-radius: 20;" +
                               "-fx-border-color: rgba(100, 200, 255, 0.5);" +
                               "-fx-border-width: 2;" +
@@ -44,9 +44,9 @@ public class DifficultyScreen {
         Label title = new Label("Select Difficulty");
         title.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 28));
         title.setTextFill(Color.WHITE);
-        title.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        title.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(56, 107, 162));" +
                       "-fx-background-radius: 15;" +
-                      "-fx-border-color: #FFD700;" +
+                      "-fx-border-color:rgb(241, 241, 240);" +
                       "-fx-border-width: 3;" +
                       "-fx-border-radius: 15;" +
                       "-fx-padding: 15;" +
@@ -69,7 +69,7 @@ public class DifficultyScreen {
         difficultyBox.getChildren().addAll(title, buttonContainer, backButton);
         
         StackPane difficultyRoot = new StackPane();
-        difficultyRoot.setStyle("-fx-background-color: linear-gradient(to bottom, #0f3460, #16537e, #0f3460);");
+        difficultyRoot.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(71, 105, 148), #16537e,rgb(31, 78, 136));");
         difficultyRoot.getChildren().add(difficultyBox);
         
         difficultyScene = new Scene(difficultyRoot, 850, 750);
@@ -101,17 +101,17 @@ public class DifficultyScreen {
     
     private void updateButtonStyle(Button button, int level) {
         if (level == selectedDifficulty) {
-            button.setStyle("-fx-background-color: linear-gradient(to bottom, #FFD700, #DAA520);" +
+            button.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(219, 193, 27), #DAA520);" +
                           "-fx-background-radius: 15;" +
-                          "-fx-border-color: #FFD700;" +
+                          "-fx-border-color:rgb(176, 155, 33);" +
                           "-fx-border-width: 3;" +
                           "-fx-border-radius: 15;" +
-                          "-fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 15, 0.8, 0, 0);");
+                          "-fx-effect: dropshadow(gaussian, rgba(126, 109, 13, 0.8), 15, 0.8, 0, 0);");
         } else {
             // Different colors for different difficulty levels
             String[] colors = {
-                "#4CAF50, #45a049", // Green for Entry Level
-                "#FF9800, #F57C00", // Orange for Challenge
+                "#4CAF50,rgb(52, 99, 54)", // Green for Entry Level
+                "#FF9800,rgb(154, 55, 19)", // Orange for Challenge
                 "#F44336, #D32F2F"  // Red for Blitz
             };
             

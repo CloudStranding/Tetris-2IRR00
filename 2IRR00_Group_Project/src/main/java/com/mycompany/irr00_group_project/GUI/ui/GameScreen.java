@@ -83,7 +83,7 @@ public class GameScreen {
         gc.fillRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
         
         // Draw grid lines
-        gc.setStroke(Color.rgb(40, 40, 40));
+        gc.setStroke(Color.rgb(31, 8, 70));
         gc.setLineWidth(1);
         for (int x = 0; x <= GRID_WIDTH; x++) {
             gc.strokeLine(x * BLOCK_SIZE, 0, x * BLOCK_SIZE, GRID_HEIGHT * BLOCK_SIZE);
@@ -96,12 +96,12 @@ public class GameScreen {
     private BorderPane createGameUI() {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
-        root.setStyle("-fx-background-color: linear-gradient(to bottom, #0f3460, #16537e, #0f3460);");
+        root.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(82, 107, 137),rgb(50, 105, 145),rgb(93, 114, 141));");
         
         // Center: Game area with enhanced styling
         VBox gameArea = new VBox(10);
         gameArea.setAlignment(Pos.CENTER);
-        gameArea.setStyle("-fx-background-color: rgba(0,0,0,0.3);" +
+        gameArea.setStyle("-fx-background-color: rgba(49, 26, 95, 0.3);" +
                          "-fx-background-radius: 20;" +
                          "-fx-border-color: rgba(100, 200, 255, 0.5);" +
                          "-fx-border-width: 2;" +
@@ -138,9 +138,9 @@ public class GameScreen {
         Label titleLabel = new Label("TETRIS");
         titleLabel.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 32));
         titleLabel.setTextFill(Color.WHITE);
-        titleLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        titleLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(75, 113, 153));" +
                           "-fx-background-radius: 12;" +
-                          "-fx-border-color: #FFD700;" +
+                          "-fx-border-color:rgb(246, 245, 242);" +
                           "-fx-border-width: 2;" +
                           "-fx-border-radius: 12;" +
                           "-fx-padding: 12;" +
@@ -158,7 +158,7 @@ public class GameScreen {
         VBox panel = new VBox(20);
         panel.setPadding(new Insets(20));
         panel.setAlignment(Pos.TOP_CENTER);
-        panel.setStyle("-fx-background-color: rgba(15, 52, 96, 0.8);" +
+        panel.setStyle("-fx-background-color: rgba(36, 69, 110, 0.8);" +
                       "-fx-border-color: rgba(100, 200, 255, 0.5);" +
                       "-fx-border-width: 2;" +
                       "-fx-background-radius: 15;" +
@@ -169,9 +169,9 @@ public class GameScreen {
         Label scoreTitleLabel = new Label("SCORE");
         scoreTitleLabel.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 18));
         scoreTitleLabel.setTextFill(Color.WHITE);
-        scoreTitleLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        scoreTitleLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(59, 100, 143));" +
                                "-fx-background-radius: 10;" +
-                               "-fx-border-color: #FFD700;" +
+                               "-fx-border-color:rgb(235, 235, 233);" +
                                "-fx-border-width: 2;" +
                                "-fx-border-radius: 10;" +
                                "-fx-padding: 8;" +
@@ -187,9 +187,9 @@ public class GameScreen {
         Label nextPieceLabel = new Label("NEXT");
         nextPieceLabel.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 18));
         nextPieceLabel.setTextFill(Color.WHITE);
-        nextPieceLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        nextPieceLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(41, 79, 120));" +
                               "-fx-background-radius: 10;" +
-                              "-fx-border-color: #FFD700;" +
+                              "-fx-border-color:rgb(244, 243, 237);" +
                               "-fx-border-width: 2;" +
                               "-fx-border-radius: 10;" +
                               "-fx-padding: 8;" +
@@ -212,7 +212,7 @@ public class GameScreen {
         VBox panel = new VBox(25);
         panel.setPadding(new Insets(20));
         panel.setAlignment(Pos.TOP_CENTER);
-        panel.setStyle("-fx-background-color: rgba(15, 52, 96, 0.8);" +
+        panel.setStyle("-fx-background-color: rgba(56, 94, 140, 0.8);" +
                       "-fx-border-color: rgba(100, 200, 255, 0.5);" +
                       "-fx-border-width: 2;" +
                       "-fx-background-radius: 15;" +
@@ -223,9 +223,9 @@ public class GameScreen {
         Label instructionsLabel = new Label("CONTROLS");
         instructionsLabel.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 14));
         instructionsLabel.setTextFill(Color.WHITE);
-        instructionsLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490, #0d2a4a);" +
+        instructionsLabel.setStyle("-fx-background-color: linear-gradient(to bottom, #1a5490,rgb(59, 106, 155));" +
                                  "-fx-background-radius: 10;" +
-                                 "-fx-border-color: #FFD700;" +
+                                 "-fx-border-color:rgb(251, 250, 247);" +
                                  "-fx-border-width: 2;" +
                                  "-fx-border-radius: 10;" +
                                  "-fx-padding: 8;" +
@@ -265,34 +265,34 @@ public class GameScreen {
         button.setPrefWidth(130);
         button.setPrefHeight(50);
         button.setFont(Font.font("Arial Black", FontWeight.EXTRA_BOLD, 14));
-        button.setStyle("-fx-background-color: linear-gradient(to bottom, #FF6B35, #D84315);" +
+        button.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(31, 71, 73),rgb(40, 85, 81));" +
                       "-fx-text-fill: white;" +
                       "-fx-background-radius: 15;" +
                       "-fx-border-radius: 15;" +
-                      "-fx-border-color: #FF8A65;" +
+                      "-fx-border-color:rgb(66, 195, 200);" +
                       "-fx-border-width: 3;" +
                       "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 8, 0.6, 0, 4);");
         button.setFocusTraversable(false);
         
         // Enhanced hover effect
         button.setOnMouseEntered(e -> {
-            button.setStyle("-fx-background-color: linear-gradient(to bottom, #FF8A65, #FF6B35);" +
+            button.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(48, 126, 135),rgb(50, 110, 122));" +
                           "-fx-text-fill: white;" +
                           "-fx-background-radius: 15;" +
                           "-fx-border-radius: 15;" +
-                          "-fx-border-color: #FF8A65;" +
+                          "-fx-border-color:rgb(31, 117, 123);" +
                           "-fx-border-width: 3;" +
-                          "-fx-effect: dropshadow(gaussian, rgba(255,107,53,0.8), 12, 0.8, 0, 6);" +
+                          "-fx-effect: dropshadow(gaussian, rgba(6, 127, 143, 0.8), 12, 0.8, 0, 6);" +
                           "-fx-scale-x: 1.05;" +
                           "-fx-scale-y: 1.05;");
         });
         
         button.setOnMouseExited(e -> {
-            button.setStyle("-fx-background-color: linear-gradient(to bottom, #FF6B35, #D84315);" +
+            button.setStyle("-fx-background-color: linear-gradient(to bottom,rgb(31, 71, 73),rgb(40, 85, 81));" +
                           "-fx-text-fill: white;" +
                           "-fx-background-radius: 15;" +
                           "-fx-border-radius: 15;" +
-                          "-fx-border-color: #FF8A65;" +
+                          "-fx-border-color:rgb(66, 195, 200);" +
                           "-fx-border-width: 3;" +
                           "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 8, 0.6, 0, 4);" +
                           "-fx-scale-x: 1.0;" +
